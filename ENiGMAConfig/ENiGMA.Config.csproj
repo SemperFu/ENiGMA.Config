@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationIcon>Interface.ico</ApplicationIcon>
+    <StartupObject />
+    <AssemblyName>ENiGMA.Config</AssemblyName>
+    <Authors>Jason Windisch</Authors>
+    <Description>Configuation editor for Enigma BBS</Description>
+    <RootNamespace>ENiGMAConfig</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hjson" Version="3.0.0" />
+    <PackageReference Include="NStack.Core" Version="0.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Terminal.Gui">
+      <HintPath>Terminal.Gui.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
