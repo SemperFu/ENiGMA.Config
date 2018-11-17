@@ -1,6 +1,7 @@
 ﻿using Hjson;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Terminal.Gui;
 
 namespace ENiGMAConfig
@@ -163,9 +164,7 @@ namespace ENiGMAConfig
             }
 
             RadioGroupDebug.SelectionChanged += (int x) => UpdateLogLevel(x);
-
             FrameViewLogging.Add(LabelFilename, TextFieldFileame, LabelLogPath, TextFieldLogPath, LabelLogLevel, RadioGroupDebug);
-
             win.Add(FrameViewLoginServers, FrameViewLogging, Footer);
         }
 
@@ -175,24 +174,29 @@ namespace ENiGMAConfig
             switch (Selected)
             {
                 case 0:
-                        MainConfig.Logging["level"] = "error";
-                        break;
+                    MainConfig.Logging["level"] = "error";
+                    break;
+
                 case 1:
-                        MainConfig.Logging["level"] = "warn";
-                        break;
+                    MainConfig.Logging["level"] = "warn";
+                    break;
+
                 case 2:
-                        MainConfig.Logging["level"] = "info";
-                        break;
+                    MainConfig.Logging["level"] = "info";
+                    break;
+
                 case 3:
-                        MainConfig.Logging["level"] = "debug";
-                        break;
+                    MainConfig.Logging["level"] = "debug";
+                    break;
+
                 case 4:
-                        MainConfig.Logging["level"] = "trace";
-                        break;
+                    MainConfig.Logging["level"] = "trace";
+                    break;
+
                 default: //If missing or invalid - Set to info.
-                    
-                        MainConfig.Logging["level"] = "info";
-                        break;   
+
+                    MainConfig.Logging["level"] = "info";
+                    break;
             }
         }
 
@@ -227,7 +231,18 @@ namespace ENiGMAConfig
         private static void UpdateSSHPort(object sender, EventArgs e)
         {
             TextField TF = (TextField)sender;
-            MainConfig.SSH["port"] = TF.Text.ToString();
+
+            string PortString = TF.Text.ToString();
+            string result = Regex.Replace(PortString, @"[^\d]", ""); 
+
+          //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+
+            int ParsedPort = 8889; //default port
+
+            if (Int32.TryParse(result, out ParsedPort))
+            {
+                MainConfig.SSH["port"] = ParsedPort;
+            }
         }
 
         private static void UpdateTelnetPort(object sender, EventArgs e)
