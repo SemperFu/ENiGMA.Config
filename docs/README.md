@@ -1,2 +1,4 @@
-# EnigmaConfig
-.Net Core 2.0 Terminal Editor for ENiGMA½ BBS configuration files works on both Windows and Linux/Unix.
+# ENiGMA.Config
+Terminal Editor for ENiGMA½ BBS configuration files. Works on both Windows and Linux/Unix.
+
+![EENiGMAConfig](screen.png "ENiGMA.Config")
