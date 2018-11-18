@@ -297,14 +297,25 @@ namespace ENiGMAConfig
             OpenDialog OpenD = new OpenDialog("Open", "Open a file");
             OpenD.DirectoryPath = OpenD.DirectoryPath = Directory.GetCurrentDirectory();
             OpenD.AllowsMultipleSelection = false;
-
+            //System.Runtime.InteropServices.RuntimeInformation
             Application.Run(OpenD);
-            OpenedConfigFile = new FileInfo(OpenD.DirectoryPath.ToString() + OpenD.FilePath.ToString());
-            MessageBox.Query(60, 7, "Selected File", string.Join(", ", OpenD.FilePaths), "ok");
+
+            OpenedConfigFile = new FileInfo(OpenD.FilePaths[0]);
+            if (OpenedConfigFile.Exists)
+            {
+                MessageBox.Query(60, 7, "Selected File", string.Join(", ", OpenD.FilePaths), "Ok");
+                ClearViews();
+                LoadJson(OpenedConfigFile.FullName);
+            }
+            else
+            {
+                MessageBox.Query(60, 7, "File not found","Please try again", "Ok");
+            }
+            // new FileInfo(OpenD.DirectoryPath.ToString() + OpenD.FilePath.ToString());
+          
 
             // string FilePath = @"C:\Users\jasin\source\repos\FileTest\config.hjson";
-            ClearViews();
-            LoadJson(OpenedConfigFile.FullName);
+           
         }
 
         private static bool Quit()
