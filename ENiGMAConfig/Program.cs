@@ -233,9 +233,9 @@ namespace ENiGMAConfig
             TextField TF = (TextField)sender;
 
             string PortString = TF.Text.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", ""); 
+            string result = Regex.Replace(PortString, @"[^\d]", "");
 
-          //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
 
             int ParsedPort = 8889; //default port
 
@@ -279,16 +279,8 @@ namespace ENiGMAConfig
             {
                 return;
             }
-            string SaveDir = "";
-            if (SaveD.DirectoryPath.EndsWith("\\"))
-            {
-                SaveDir = SaveD.DirectoryPath.ToString();
-            }
-            else
-            {
-                SaveDir = SaveD.DirectoryPath.ToString() + "\\";
-            }
-            string FullSavePath = SaveDir + Filename;
+
+            string FullSavePath = Path.Combine(SaveD.DirectoryPath.ToString(), Filename);
             SaveJson(FullSavePath);
         }
 
@@ -309,13 +301,8 @@ namespace ENiGMAConfig
             }
             else
             {
-                MessageBox.Query(60, 7, "File not found","Please try again", "Ok");
+                MessageBox.Query(60, 7, "File not found", "Please try again", "Ok");
             }
-            // new FileInfo(OpenD.DirectoryPath.ToString() + OpenD.FilePath.ToString());
-          
-
-            // string FilePath = @"C:\Users\jasin\source\repos\FileTest\config.hjson";
-           
         }
 
         private static bool Quit()
@@ -390,6 +377,18 @@ namespace ENiGMAConfig
         {
             HjsonOptions FileOptions = new HjsonOptions();
             FileOptions.KeepWsc = true;
+
+            FileInfo SavePath = new FileInfo(FilePath);
+            if (SavePath.Exists) //Exists - Lets Backup
+            {
+                DirectoryInfo BackupDir = new DirectoryInfo(Path.Combine(SavePath.Directory.FullName, "Backups"));
+                if (!BackupDir.Exists) BackupDir.Create();
+                DateTime CurrentTime = DateTime.Now;
+                string BackupFilename = SavePath.Name + "." + CurrentTime.Year.ToString() + "." + CurrentTime.Month.ToString() + "." + CurrentTime.Day.ToString() + "." + CurrentTime.Minute.ToString() + "." + CurrentTime.Second.ToString() + ".bak";
+
+                string BackupPath = Path.Combine(BackupDir.FullName, BackupFilename);
+                SavePath.CopyTo(BackupPath);
+            }
 
             HjsonValue.Save(MainConfig.Mainfile, FilePath, FileOptions);
         }
