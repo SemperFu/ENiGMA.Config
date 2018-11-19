@@ -274,6 +274,7 @@ namespace ENiGMAConfig
 
             Application.Run(SaveD);
             // SaveD.
+            if (SaveD.FileName == null) return; //No file selected - return
             string Filename = SaveD.FileName.ToString();
             if (string.IsNullOrWhiteSpace(Filename))
             {
@@ -292,6 +293,7 @@ namespace ENiGMAConfig
             //System.Runtime.InteropServices.RuntimeInformation
             Application.Run(OpenD);
 
+            if (OpenD.FilePaths.Count == 0) return; //No file selected - return
             OpenedConfigFile = new FileInfo(OpenD.FilePaths[0]);
             if (OpenedConfigFile.Exists)
             {
@@ -345,11 +347,12 @@ namespace ENiGMAConfig
             ImportOptions.KeepWsc = true;
 
             MainConfig.Mainfile = HjsonValue.Load(FilePath, ImportOptions);
-            ProcessConfig();
+            ProcessConfig(); //File Loaded - Process it.
         }
 
         private static void ProcessConfig()
         {
+            try {
             win.Remove(LabelNew);
             MainConfig.MainObjects = MainConfig.Mainfile.Qo();
             MainConfig.General = MainConfig.MainObjects.Qo("general");
@@ -371,6 +374,14 @@ namespace ENiGMAConfig
             MainConfig.archivers = MainConfig.MainObjects.Qo("archives");
 
             AddConfigMenu();
+            }
+            catch
+            {
+                MessageBox.Query(60, 7, "Error", "Error Prossing HJSON file. "+ Environment.NewLine + "Please ensure this is a proper Enigma Config", "Ok");
+                ClearViews();
+
+                win.Add(LabelNew, Footer);
+            }
         }
 
         private static void SaveJson(string FilePath)
