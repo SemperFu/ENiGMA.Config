@@ -78,7 +78,7 @@ namespace ENiGMAConfig
             TextField TextFieldPromptFile = new TextField(14, 5, 30, MainConfig.General.Qs("promptFile"));
             win.Add(LabelBoardName, TextfieldBoardName, LabelMenuFile, TextFieldMenuFile, LabelPromptFile, TextFieldPromptFile);
 
-            FrameView FrameViewLoginServers = new FrameView(new Rect(1, 10, 63, 10), "Login Servers");
+            FrameView FrameViewLoginServers = new FrameView(new Rect(1, 10, 62, 10), "Login Servers");
 
             CheckBox CheckBoxTelnet = new CheckBox(1, 0, "telnet");
             CheckBoxTelnet.Checked = MainConfig.Telnet.Qb("enabled");
@@ -96,7 +96,7 @@ namespace ENiGMAConfig
             TextFieldSSHPort.Changed += new EventHandler(UpdateSSHPort);
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
-            TextField TextFieldPrivateKeyPath = new TextField(17, 3, 43, MainConfig.SSH.Qstr("privateKeyPem"));
+            TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.SSH.Qstr("privateKeyPem"));
 
             Label LabelPrivateKeyPass = new Label(1, 4, "privateKeyPass: ");
 
@@ -121,7 +121,7 @@ namespace ENiGMAConfig
 
             FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
 
-            FrameView FrameViewLogging = new FrameView(new Rect(63, 0, 54, 10), "Logging");
+            FrameView FrameViewLogging = new FrameView(new Rect(64, 0, 53, 10), "Logging");
 
             //new CheckBox (1, 0, "Remember me"),
             Label LabelFilename = new Label(2, 1, "Filename: ");
@@ -167,7 +167,50 @@ namespace ENiGMAConfig
 
             RadioGroupDebug.SelectionChanged += (int x) => UpdateLogLevel(x);
             FrameViewLogging.Add(LabelFilename, TextFieldFileame, LabelLogPath, TextFieldLogPath, LabelLogLevel, RadioGroupDebug);
-            win.Add(FrameViewLoginServers, FrameViewLogging, Footer);
+            win.Add(FrameViewLoginServers, FrameViewLogging);
+
+            //Email
+
+            FrameView FrameViewEmail = new FrameView(new Rect(64, 10, 53, 10), "Email");
+
+            //new CheckBox (1, 0, "Remember me"),
+            Label LabelEmailTransport = new Label(1, 0, "[Transport] ");
+            Label LabelEmailFrom = new Label(8, 1, "From: ");
+            TextField TextFieldEmailFrom = new TextField(15, 1, 22, MainConfig.Logging.Qs("admin@email.com"));
+
+            Label LabelEmailHost = new Label(8, 2, "Host: ");
+            TextField TextFieldEmailHost = new TextField(15, 2, 22, MainConfig.Paths.Qs("logs"));
+            Label LabelEmailPort = new Label(8, 3, "Port: ");
+            TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.Email.Qs("logs"));
+            CheckBox CheckBoxEmailSecure = new CheckBox(25, 3, "secure");
+            CheckBoxEmailSecure.Checked = MainConfig.WSS.Qb("enabled");
+            CheckBoxEmailSecure.Toggled += new EventHandler(UpdateWSSEnabled);
+
+            Label LabelEmailAuth = new Label(1, 4, "[Auth] ");
+            Label LabelEmailAuthUser = new Label(8, 5, "User: ");
+            TextField TextFieldEmailAuthUser = new TextField(15, 5, 22, MainConfig.Paths.Qs("logs"));
+            Label LabelEmailAuthPass = new Label(8, 6, "Pass: ");
+            TextField TextFieldEmailAuthPass = new TextField(15, 6, 22, MainConfig.Paths.Qs("logs"));
+            TextFieldEmailAuthPass.Secret = true;
+            Button ButtonEKeyShow = new Button(51, 4, "Show");
+            ButtonEKeyShow.Clicked = () => ButtonEKeyShow_Clicked(ButtonEKeyShow, TextFieldEmailAuthPass);
+
+            FrameViewEmail.Add(LabelEmailTransport,LabelEmailAuth, LabelEmailFrom, TextFieldEmailFrom, LabelEmailHost, TextFieldEmailHost, LabelEmailPort, TextFieldEmailPort, CheckBoxEmailSecure, LabelEmailAuthUser,TextFieldEmailAuthUser, TextFieldEmailAuthUser,LabelEmailAuthPass, TextFieldEmailAuthPass);
+            win.Add(FrameViewEmail,Footer);
+        }
+
+        private static void ButtonEKeyShow_Clicked(Button buttonEKeyShow, TextField textFieldEmailAuthPass)
+        {
+            if (textFieldEmailAuthPass.Secret)
+            {
+                textFieldEmailAuthPass.Secret = false;
+                buttonEKeyShow.Text = "Hide";
+            }
+            else
+            {
+                textFieldEmailAuthPass.Secret = true;
+                buttonEKeyShow.Text = "Show";
+            }
         }
 
         private static void ButtonPKeyShow_Clicked(Button ButtonPKeyShow, TextField TextFieldPrivateKeyPass)
