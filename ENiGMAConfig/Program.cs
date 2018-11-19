@@ -100,8 +100,10 @@ namespace ENiGMAConfig
 
             Label LabelPrivateKeyPass = new Label(1, 4, "privateKeyPass: ");
 
-            TextField TextFieldPrivateKeyPass = new TextField(17, 4, 43, MainConfig.SSH.Qstr("privateKeyPass"));
+            TextField TextFieldPrivateKeyPass = new TextField(17, 4, 32, MainConfig.SSH.Qstr("privateKeyPass"));
             TextFieldPrivateKeyPass.Secret = true;
+            Button ButtonPKeyShow = new Button(51, 4, "Show");
+            ButtonPKeyShow.Clicked= () => ButtonPKeyShow_Clicked(ButtonPKeyShow,TextFieldPrivateKeyPass);
 
             CheckBox CheckBoxWS = new CheckBox(1, 6, "ws");
             CheckBoxWS.Checked = MainConfig.WSS.Qb("enabled");
@@ -117,7 +119,7 @@ namespace ENiGMAConfig
             Label LabelWSSPort = new Label(17, 7, "port: ");
             TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.WSS.Qstr("port"));
 
-            FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
+            FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
 
             FrameView FrameViewLogging = new FrameView(new Rect(63, 0, 54, 10), "Logging");
 
@@ -166,6 +168,21 @@ namespace ENiGMAConfig
             RadioGroupDebug.SelectionChanged += (int x) => UpdateLogLevel(x);
             FrameViewLogging.Add(LabelFilename, TextFieldFileame, LabelLogPath, TextFieldLogPath, LabelLogLevel, RadioGroupDebug);
             win.Add(FrameViewLoginServers, FrameViewLogging, Footer);
+        }
+
+        private static void ButtonPKeyShow_Clicked(Button ButtonPKeyShow, TextField TextFieldPrivateKeyPass)
+        {
+            if (TextFieldPrivateKeyPass.Secret)
+            {
+                TextFieldPrivateKeyPass.Secret = false;
+                ButtonPKeyShow.Text = "Hide";
+            }
+            else
+            {
+                TextFieldPrivateKeyPass.Secret = true;
+                ButtonPKeyShow.Text = "Show";
+            }
+         
         }
 
         private static void UpdateLogLevel(int Selected)
@@ -352,32 +369,33 @@ namespace ENiGMAConfig
 
         private static void ProcessConfig()
         {
-            try {
-            win.Remove(LabelNew);
-            MainConfig.MainObjects = MainConfig.Mainfile.Qo();
-            MainConfig.General = MainConfig.MainObjects.Qo("general");
-            MainConfig.Paths = MainConfig.MainObjects.Qo("paths");
-            MainConfig.Logging = MainConfig.MainObjects.Qo("logging").Qo("rotatingFile");
-            MainConfig.Theme = MainConfig.MainObjects.Qo("theme");
-            MainConfig.LoginServers = MainConfig.MainObjects.Qo("loginServers");
-            MainConfig.Telnet = MainConfig.LoginServers.Qo("telnet");
-            MainConfig.SSH = MainConfig.LoginServers.Qo("ssh");
-            MainConfig.WebSocket = MainConfig.LoginServers.Qo("webSocket");
-            MainConfig.WS = MainConfig.WebSocket.Qo("ws");
-            MainConfig.WSS = MainConfig.WebSocket.Qo("wss");
-            MainConfig.Email = MainConfig.MainObjects.Qo("email");
-            MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
-            MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
-            MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");
-            MainConfig.fileBase = MainConfig.MainObjects.Qo("fileBase");
-            MainConfig.scannerTossers = MainConfig.MainObjects.Qo("scannerTossers");
-            MainConfig.archivers = MainConfig.MainObjects.Qo("archives");
+            try
+            {
+                win.Remove(LabelNew);
+                MainConfig.MainObjects = MainConfig.Mainfile.Qo();
+                MainConfig.General = MainConfig.MainObjects.Qo("general");
+                MainConfig.Paths = MainConfig.MainObjects.Qo("paths");
+                MainConfig.Logging = MainConfig.MainObjects.Qo("logging").Qo("rotatingFile");
+                MainConfig.Theme = MainConfig.MainObjects.Qo("theme");
+                MainConfig.LoginServers = MainConfig.MainObjects.Qo("loginServers");
+                MainConfig.Telnet = MainConfig.LoginServers.Qo("telnet");
+                MainConfig.SSH = MainConfig.LoginServers.Qo("ssh");
+                MainConfig.WebSocket = MainConfig.LoginServers.Qo("webSocket");
+                MainConfig.WS = MainConfig.WebSocket.Qo("ws");
+                MainConfig.WSS = MainConfig.WebSocket.Qo("wss");
+                MainConfig.Email = MainConfig.MainObjects.Qo("email");
+                MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
+                MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
+                MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");
+                MainConfig.fileBase = MainConfig.MainObjects.Qo("fileBase");
+                MainConfig.scannerTossers = MainConfig.MainObjects.Qo("scannerTossers");
+                MainConfig.archivers = MainConfig.MainObjects.Qo("archives");
 
-            AddConfigMenu();
+                AddConfigMenu();
             }
             catch
             {
-                MessageBox.Query(60, 7, "Error", "Error Prossing HJSON file. "+ Environment.NewLine + "Please ensure this is a proper Enigma Config", "Ok");
+                MessageBox.Query(40, 7, "Error", "Error Prossing HJSON file.\n Please ensure this is a proper Enigma Config", "Ok");
                 ClearViews();
 
                 win.Add(LabelNew, Footer);
