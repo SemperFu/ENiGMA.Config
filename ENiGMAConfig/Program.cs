@@ -68,15 +68,20 @@ namespace ENiGMAConfig
             //win.Remove(LabelNew);
             // Add some controls
             //Label LabelBoardName = new Label("boardName: ") { X = 3, Y = 2 };
-            Label LabelBoardName = new Label(3, 2, "BBS Name");
-            TextField TextfieldBoardName = new TextField(14, 2, 30, MainConfig.General.Qs("boardName").Replace("½", "")); //Crashes textfield. Bug already submitted
+            Label LabelBoardName = new Label(3, 2, "BBS Name:");
+            TextField TextfieldBoardName = new TextField(19, 2, 30, MainConfig.General.Qs("boardName").Replace("½", "")); //Crashes textfield. Bug already submitted
             TextfieldBoardName.Changed += new EventHandler(UpdateBBSName);
 
-            Label LabelMenuFile = new Label(3, 4, "menuFile: ");
-            TextField TextFieldMenuFile = new TextField(14, 4, 30, MainConfig.General.Qs("menuFile"));
-            Label LabelPromptFile = new Label(3, 5, "promptFile: ");
-            TextField TextFieldPromptFile = new TextField(14, 5, 30, MainConfig.General.Qs("promptFile"));
-            win.Add(LabelBoardName, TextfieldBoardName, LabelMenuFile, TextFieldMenuFile, LabelPromptFile, TextFieldPromptFile);
+            Label LabelMenuFile = new Label(3, 4, "Menu File:");
+            TextField TextFieldMenuFile = new TextField(19, 4, 30, MainConfig.General.Qs("menuFile"));
+            Label LabelPromptFile = new Label(3, 5, "Prompt File:");
+            TextField TextFieldPromptFile = new TextField(19, 5, 30, MainConfig.General.Qs("promptFile"));
+
+            Label LabelDefaultTheme = new Label(3, 7, "Default Theme:");
+            TextField TextFieldDefaultTheme = new TextField(19, 7, 30, MainConfig.Theme.Qs("default"));
+            Label LabelPreLoginTheme = new Label(3, 8, "Prelogin Theme: ");
+            TextField TextFieldPreLoginTheme = new TextField(19, 8, 30, MainConfig.Theme.Qs("preLogin"));
+            win.Add(LabelBoardName, TextfieldBoardName, LabelMenuFile, TextFieldMenuFile, LabelPromptFile, TextFieldPromptFile, LabelDefaultTheme, TextFieldDefaultTheme, LabelPreLoginTheme, TextFieldPreLoginTheme);
 
             FrameView FrameViewLoginServers = new FrameView(new Rect(1, 10, 62, 10), "Login Servers");
 
