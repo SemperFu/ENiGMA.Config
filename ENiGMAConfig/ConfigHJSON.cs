@@ -11,12 +11,15 @@ namespace ENiGMAConfig
         public JsonObject Logging;
         public JsonObject Theme;
         public JsonObject LoginServers;
-        public JsonObject Telnet;
-        public JsonObject SSH;
-        public JsonObject WebSocket;
-        public JsonObject WS;
-        public JsonObject WSS;
+        public JsonObject LoginServersTelnet;
+        public JsonObject LoginServersSSH;
+        public JsonObject LoginServersWebSocket;
+        public JsonObject LoginServersWS;
+        public JsonObject LoginServersWSS;
         public JsonObject Email;
+        public JsonObject EmailTransport;
+        public JsonObject EmailAuth;
+
         public JsonObject contentServers;
         public JsonObject messageConferences;
         public JsonObject messageNetworks;

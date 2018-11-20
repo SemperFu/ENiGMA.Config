@@ -81,43 +81,43 @@ namespace ENiGMAConfig
             FrameView FrameViewLoginServers = new FrameView(new Rect(1, 10, 62, 10), "Login Servers");
 
             CheckBox CheckBoxTelnet = new CheckBox(1, 0, "telnet");
-            CheckBoxTelnet.Checked = MainConfig.Telnet.Qb("enabled");
+            CheckBoxTelnet.Checked = MainConfig.LoginServersTelnet.Qb("enabled");
             CheckBoxTelnet.Toggled += new EventHandler(UpdateTelnetEnabled);
             Label LabelTelnetPort = new Label(17, 0, "port: ");
-            TextField TextFieldTelnetPort = new TextField(24, 0, 5, MainConfig.Telnet.Qstr("port"));
+            TextField TextFieldTelnetPort = new TextField(24, 0, 5, MainConfig.LoginServersTelnet.Qstr("port"));
             TextFieldTelnetPort.Changed += new EventHandler(UpdateTelnetPort);
 
             CheckBox CheckBoxSSH = new CheckBox(1, 1, "ssh");
-            CheckBoxSSH.Checked = MainConfig.SSH.Qb("enabled");
+            CheckBoxSSH.Checked = MainConfig.LoginServersSSH.Qb("enabled");
             CheckBoxSSH.Toggled += new EventHandler(UpdateSSHEnabled);
 
             Label LabelSSHPort = new Label(17, 1, "port: ");
-            TextField TextFieldSSHPort = new TextField(24, 1, 5, MainConfig.SSH.Qstr("port"));
+            TextField TextFieldSSHPort = new TextField(24, 1, 5, MainConfig.LoginServersSSH.Qstr("port"));
             TextFieldSSHPort.Changed += new EventHandler(UpdateSSHPort);
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
-            TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.SSH.Qstr("privateKeyPem"));
+            TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.LoginServersSSH.Qstr("privateKeyPem"));
 
             Label LabelPrivateKeyPass = new Label(1, 4, "privateKeyPass: ");
 
-            TextField TextFieldPrivateKeyPass = new TextField(17, 4, 32, MainConfig.SSH.Qstr("privateKeyPass"));
+            TextField TextFieldPrivateKeyPass = new TextField(17, 4, 32, MainConfig.LoginServersSSH.Qstr("privateKeyPass"));
             TextFieldPrivateKeyPass.Secret = true;
             Button ButtonPKeyShow = new Button(51, 4, "Show");
-            ButtonPKeyShow.Clicked= () => ButtonPKeyShow_Clicked(ButtonPKeyShow,TextFieldPrivateKeyPass);
+            ButtonPKeyShow.Clicked = () => ButtonPKeyShow_Clicked(ButtonPKeyShow, TextFieldPrivateKeyPass);
 
             CheckBox CheckBoxWS = new CheckBox(1, 6, "ws");
-            CheckBoxWS.Checked = MainConfig.WSS.Qb("enabled");
+            CheckBoxWS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWS.Toggled += new EventHandler(UpdateWSEnabled);
 
             Label LabelWSPort = new Label(17, 6, "port: ");
-            TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.WS.Qstr("port"));
+            TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.LoginServersWS.Qstr("port"));
 
             CheckBox CheckBoxWSS = new CheckBox(1, 7, "wss");
-            CheckBoxWSS.Checked = MainConfig.WSS.Qb("enabled");
+            CheckBoxWSS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWSS.Toggled += new EventHandler(UpdateWSSEnabled);
 
             Label LabelWSSPort = new Label(17, 7, "port: ");
-            TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.WSS.Qstr("port"));
+            TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.LoginServersWSS.Qstr("port"));
 
             FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
 
@@ -176,27 +176,27 @@ namespace ENiGMAConfig
             //new CheckBox (1, 0, "Remember me"),
             Label LabelEmailTransport = new Label(1, 0, "[Transport] ");
             Label LabelEmailFrom = new Label(8, 1, "From: ");
-            TextField TextFieldEmailFrom = new TextField(15, 1, 22, MainConfig.Logging.Qs("admin@email.com"));
+            TextField TextFieldEmailFrom = new TextField(15, 1, 25, MainConfig.Email.Qs("defaultFrom"));
 
             Label LabelEmailHost = new Label(8, 2, "Host: ");
-            TextField TextFieldEmailHost = new TextField(15, 2, 22, MainConfig.Paths.Qs("logs"));
+            TextField TextFieldEmailHost = new TextField(15, 2, 25, MainConfig.EmailTransport.Qs("host"));
             Label LabelEmailPort = new Label(8, 3, "Port: ");
-            TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.Email.Qs("logs"));
-            CheckBox CheckBoxEmailSecure = new CheckBox(25, 3, "secure");
-            CheckBoxEmailSecure.Checked = MainConfig.WSS.Qb("enabled");
+            TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.EmailTransport.Qstr("port"));
+            CheckBox CheckBoxEmailSecure = new CheckBox(22, 3, "secure");
+            CheckBoxEmailSecure.Checked = MainConfig.EmailTransport.Qb("secure");
             CheckBoxEmailSecure.Toggled += new EventHandler(UpdateWSSEnabled);
 
             Label LabelEmailAuth = new Label(1, 4, "[Auth] ");
             Label LabelEmailAuthUser = new Label(8, 5, "User: ");
-            TextField TextFieldEmailAuthUser = new TextField(15, 5, 22, MainConfig.Paths.Qs("logs"));
+            TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.Paths.Qs("logs"));
             Label LabelEmailAuthPass = new Label(8, 6, "Pass: ");
-            TextField TextFieldEmailAuthPass = new TextField(15, 6, 22, MainConfig.Paths.Qs("logs"));
+            TextField TextFieldEmailAuthPass = new TextField(15, 6, 25, MainConfig.Paths.Qs("logs"));
             TextFieldEmailAuthPass.Secret = true;
-            Button ButtonEKeyShow = new Button(51, 4, "Show");
+            Button ButtonEKeyShow = new Button(41, 6, "Show");
             ButtonEKeyShow.Clicked = () => ButtonEKeyShow_Clicked(ButtonEKeyShow, TextFieldEmailAuthPass);
 
-            FrameViewEmail.Add(LabelEmailTransport,LabelEmailAuth, LabelEmailFrom, TextFieldEmailFrom, LabelEmailHost, TextFieldEmailHost, LabelEmailPort, TextFieldEmailPort, CheckBoxEmailSecure, LabelEmailAuthUser,TextFieldEmailAuthUser, TextFieldEmailAuthUser,LabelEmailAuthPass, TextFieldEmailAuthPass);
-            win.Add(FrameViewEmail,Footer);
+            FrameViewEmail.Add(LabelEmailTransport, LabelEmailAuth, LabelEmailFrom, TextFieldEmailFrom, LabelEmailHost, TextFieldEmailHost, LabelEmailPort, TextFieldEmailPort, CheckBoxEmailSecure, LabelEmailAuthUser, TextFieldEmailAuthUser, TextFieldEmailAuthUser, LabelEmailAuthPass, TextFieldEmailAuthPass, ButtonEKeyShow);
+            win.Add(FrameViewEmail, Footer);
         }
 
         private static void ButtonEKeyShow_Clicked(Button buttonEKeyShow, TextField textFieldEmailAuthPass)
@@ -225,7 +225,6 @@ namespace ENiGMAConfig
                 TextFieldPrivateKeyPass.Secret = true;
                 ButtonPKeyShow.Text = "Show";
             }
-         
         }
 
         private static void UpdateLogLevel(int Selected)
@@ -267,25 +266,25 @@ namespace ENiGMAConfig
         private static void UpdateSSHEnabled(object sender, EventArgs e)
         {
             CheckBox SSH = (CheckBox)sender;
-            MainConfig.SSH["enabled"] = SSH.Checked;
+            MainConfig.LoginServersSSH["enabled"] = SSH.Checked;
         }
 
         private static void UpdateTelnetEnabled(object sender, EventArgs e)
         {
             CheckBox Telnet = (CheckBox)sender;
-            MainConfig.Telnet["enabled"] = Telnet.Checked;
+            MainConfig.LoginServersTelnet["enabled"] = Telnet.Checked;
         }
 
         private static void UpdateWSEnabled(object sender, EventArgs e)
         {
             CheckBox WS = (CheckBox)sender;
-            MainConfig.WS["enabled"] = WS.Checked;
+            MainConfig.LoginServersWS["enabled"] = WS.Checked;
         }
 
         private static void UpdateWSSEnabled(object sender, EventArgs e)
         {
             CheckBox WSS = (CheckBox)sender;
-            MainConfig.WSS["enabled"] = WSS.Checked;
+            MainConfig.LoginServersWSS["enabled"] = WSS.Checked;
         }
 
         private static void UpdateSSHPort(object sender, EventArgs e)
@@ -301,14 +300,14 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(result, out ParsedPort))
             {
-                MainConfig.SSH["port"] = ParsedPort;
+                MainConfig.LoginServersSSH["port"] = ParsedPort;
             }
         }
 
         private static void UpdateTelnetPort(object sender, EventArgs e)
         {
             TextField TF = (TextField)sender;
-            MainConfig.Telnet["port"] = TF.Text.ToString();
+            MainConfig.LoginServersTelnet["port"] = TF.Text.ToString();
         }
 
         private static void UpdateBBSName(object sender, EventArgs e)
@@ -421,12 +420,14 @@ namespace ENiGMAConfig
                 MainConfig.Logging = MainConfig.MainObjects.Qo("logging").Qo("rotatingFile");
                 MainConfig.Theme = MainConfig.MainObjects.Qo("theme");
                 MainConfig.LoginServers = MainConfig.MainObjects.Qo("loginServers");
-                MainConfig.Telnet = MainConfig.LoginServers.Qo("telnet");
-                MainConfig.SSH = MainConfig.LoginServers.Qo("ssh");
-                MainConfig.WebSocket = MainConfig.LoginServers.Qo("webSocket");
-                MainConfig.WS = MainConfig.WebSocket.Qo("ws");
-                MainConfig.WSS = MainConfig.WebSocket.Qo("wss");
+                MainConfig.LoginServersTelnet = MainConfig.LoginServers.Qo("telnet");
+                MainConfig.LoginServersSSH = MainConfig.LoginServers.Qo("ssh");
+                MainConfig.LoginServersWebSocket = MainConfig.LoginServers.Qo("webSocket");
+                MainConfig.LoginServersWS = MainConfig.LoginServersWebSocket.Qo("ws");
+                MainConfig.LoginServersWSS = MainConfig.LoginServersWebSocket.Qo("wss");
                 MainConfig.Email = MainConfig.MainObjects.Qo("email");
+                MainConfig.EmailTransport = MainConfig.Email.Qo("transport");
+                MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth");
                 MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
                 MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
                 MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");

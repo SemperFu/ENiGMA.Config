@@ -295,15 +295,17 @@
         //  * "transport" to a configuration block that meets the
         //    requirements of Nodemailer (https://nodemailer.com/)
         //
-        //  Example:
-        //  transport: {
-        //      service: Zoho
-        //      auth: {
-        //          user: myuser@myhost.com
-        //          pass: supersecretpassword
-        //      }
-        //  }
-        //
+	    defaultFrom: sysop@bbs.awesome.com
+        transport: {
+				service: Zoho
+				host: smtp.awesomeserver.com
+				port: 587
+				secure: false
+				auth: {
+					user: myuser@myhost.com
+					pass: supersecretpassword
+				}
+          }
     }
 
     //  Message conferences and areas are within this block
