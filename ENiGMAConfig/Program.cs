@@ -479,7 +479,17 @@ namespace ENiGMAConfig
 
         private static void Save()
         {
-            SaveJson(OpenedConfigFile.FullName);
+            if (OpenedConfigFile == null)
+            {
+                //File was new  - Use saveas instead
+                SaveAs();
+            }
+            else
+            {
+                //File not new, save.
+                SaveJson(OpenedConfigFile.FullName);
+            }
+          
         }
 
         private static void SaveAs()
@@ -497,6 +507,7 @@ namespace ENiGMAConfig
             }
 
             string FullSavePath = Path.Combine(SaveD.DirectoryPath.ToString(), Filename);
+            OpenedConfigFile = new FileInfo(FullSavePath);
             SaveJson(FullSavePath);
         }
 
@@ -552,6 +563,7 @@ namespace ENiGMAConfig
             TextReader TextReaderNew = new StringReader(Properties.Resources.DefaultConfigFile);
 
             MainConfig.Mainfile = HjsonValue.Load(TextReaderNew, ImportOptions);
+            OpenedConfigFile = null;
             ClearViews();
             ProcessConfig();
         }
