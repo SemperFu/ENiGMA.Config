@@ -74,13 +74,17 @@ namespace ENiGMAConfig
 
             Label LabelMenuFile = new Label(3, 4, "Menu File:");
             TextField TextFieldMenuFile = new TextField(19, 4, 30, MainConfig.General.Qs("menuFile"));
+            TextFieldMenuFile.Changed += new EventHandler(UpdateMenuFile);
             Label LabelPromptFile = new Label(3, 5, "Prompt File:");
             TextField TextFieldPromptFile = new TextField(19, 5, 30, MainConfig.General.Qs("promptFile"));
+            TextFieldPromptFile.Changed += new EventHandler(UpdatePromptFile);
 
             Label LabelDefaultTheme = new Label(3, 7, "Default Theme:");
             TextField TextFieldDefaultTheme = new TextField(19, 7, 30, MainConfig.Theme.Qs("default"));
+            TextFieldDefaultTheme.Changed += new EventHandler(UpdateDefaultTheme);
             Label LabelPreLoginTheme = new Label(3, 8, "Prelogin Theme: ");
             TextField TextFieldPreLoginTheme = new TextField(19, 8, 30, MainConfig.Theme.Qs("preLogin"));
+            TextFieldPreLoginTheme.Changed += new EventHandler(UpdatePreloginTheme);
             win.Add(LabelBoardName, TextfieldBoardName, LabelMenuFile, TextFieldMenuFile, LabelPromptFile, TextFieldPromptFile, LabelDefaultTheme, TextFieldDefaultTheme, LabelPreLoginTheme, TextFieldPreLoginTheme);
 
             FrameView FrameViewLoginServers = new FrameView(new Rect(1, 10, 62, 10), "Login Servers");
@@ -102,27 +106,33 @@ namespace ENiGMAConfig
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
             TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.LoginServersSSH.Qstr("privateKeyPem"));
+            TextFieldPrivateKeyPath.Changed += new EventHandler(UpdatePrivateKeyPath);
 
             Label LabelPrivateKeyPass = new Label(1, 4, "privateKeyPass: ");
 
             TextField TextFieldPrivateKeyPass = new TextField(17, 4, 32, MainConfig.LoginServersSSH.Qstr("privateKeyPass"));
             TextFieldPrivateKeyPass.Secret = true;
+            TextFieldPrivateKeyPass.Changed += new EventHandler(UpdatePrivateKeyPass);
             Button ButtonPKeyShow = new Button(51, 4, "Show");
             ButtonPKeyShow.Clicked = () => ButtonPKeyShow_Clicked(ButtonPKeyShow, TextFieldPrivateKeyPass);
 
             CheckBox CheckBoxWS = new CheckBox(1, 6, "ws");
             CheckBoxWS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWS.Toggled += new EventHandler(UpdateWSEnabled);
+            
 
             Label LabelWSPort = new Label(17, 6, "port: ");
             TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.LoginServersWS.Qstr("port"));
+            TextFieldWSPort.Changed += new EventHandler(UpdateWSPort);
 
             CheckBox CheckBoxWSS = new CheckBox(1, 7, "wss");
             CheckBoxWSS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWSS.Toggled += new EventHandler(UpdateWSSEnabled);
+            
 
             Label LabelWSSPort = new Label(17, 7, "port: ");
             TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.LoginServersWSS.Qstr("port"));
+            TextFieldWSSPort.Changed += new EventHandler(UpdateWSSPort);
 
             FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
 
@@ -131,8 +141,10 @@ namespace ENiGMAConfig
             //new CheckBox (1, 0, "Remember me"),
             Label LabelFilename = new Label(2, 1, "Filename: ");
             TextField TextFieldFileame = new TextField(13, 1, 22, MainConfig.Logging.Qs("fileName"));
+            TextFieldFileame.Changed += new EventHandler(UpdateLogFileame);
             Label LabelLogPath = new Label(2, 2, "Path: ");
             TextField TextFieldLogPath = new TextField(13, 2, 22, MainConfig.Paths.Qs("logs"));
+            TextFieldLogPath.Changed += new EventHandler(UpdateLogPath);
             Label LabelLogLevel = new Label(39, 0, "Level: ");
             RadioGroup RadioGroupDebug = new RadioGroup(39, 2, new[] { "_Error", "_Warn", "_Info", "_Debug", "_Trace" });
 
@@ -182,11 +194,14 @@ namespace ENiGMAConfig
             Label LabelEmailTransport = new Label(1, 0, "[Transport] ");
             Label LabelEmailFrom = new Label(8, 1, "From: ");
             TextField TextFieldEmailFrom = new TextField(15, 1, 25, MainConfig.Email.Qs("defaultFrom"));
+            TextFieldEmailFrom.Changed += new EventHandler(UpdateEmailFrom);
 
             Label LabelEmailHost = new Label(8, 2, "Host: ");
             TextField TextFieldEmailHost = new TextField(15, 2, 25, MainConfig.EmailTransport.Qs("host"));
+            TextFieldEmailHost.Changed += new EventHandler(UpdateEmailHost);
             Label LabelEmailPort = new Label(8, 3, "Port: ");
             TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.EmailTransport.Qstr("port"));
+            TextFieldEmailPort.Changed += new EventHandler(UpdateEmailPort);
             CheckBox CheckBoxEmailSecure = new CheckBox(22, 3, "secure");
             CheckBoxEmailSecure.Checked = MainConfig.EmailTransport.Qb("secure");
             CheckBoxEmailSecure.Toggled += new EventHandler(UpdateWSSEnabled);
@@ -194,14 +209,139 @@ namespace ENiGMAConfig
             Label LabelEmailAuth = new Label(1, 4, "[Auth] ");
             Label LabelEmailAuthUser = new Label(8, 5, "User: ");
             TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.Paths.Qs("logs"));
+            TextFieldEmailAuthUser.Changed += new EventHandler(UpdateEmailAuthUser);
             Label LabelEmailAuthPass = new Label(8, 6, "Pass: ");
             TextField TextFieldEmailAuthPass = new TextField(15, 6, 25, MainConfig.Paths.Qs("logs"));
             TextFieldEmailAuthPass.Secret = true;
+            TextFieldEmailAuthPass.Changed += new EventHandler(UpdateEmailAuthPass);
             Button ButtonEKeyShow = new Button(41, 6, "Show");
             ButtonEKeyShow.Clicked = () => ButtonEKeyShow_Clicked(ButtonEKeyShow, TextFieldEmailAuthPass);
 
             FrameViewEmail.Add(LabelEmailTransport, LabelEmailAuth, LabelEmailFrom, TextFieldEmailFrom, LabelEmailHost, TextFieldEmailHost, LabelEmailPort, TextFieldEmailPort, CheckBoxEmailSecure, LabelEmailAuthUser, TextFieldEmailAuthUser, TextFieldEmailAuthUser, LabelEmailAuthPass, TextFieldEmailAuthPass, ButtonEKeyShow);
             win.Add(FrameViewEmail, Footer);
+        }
+
+        private static void UpdateLogPath(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.Paths["logs"] = TF.Text.ToString();
+        }
+
+        private static void UpdateLogFileame(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.Logging["fileName"] = TF.Text.ToString();
+        }
+
+        private static void UpdateWSPort(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+
+            string PortString = TF.Text.ToString();
+            string result = Regex.Replace(PortString, @"[^\d]", "");
+
+            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+
+            int ParsedPort = 8810; //default port
+
+            if (Int32.TryParse(result, out ParsedPort))
+            {
+                MainConfig.LoginServersWS["port"] = ParsedPort;
+            }
+        }
+
+        private static void UpdateWSSPort(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+
+            string PortString = TF.Text.ToString();
+            string result = Regex.Replace(PortString, @"[^\d]", "");
+
+            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+
+            int ParsedPort = 8811; //default port
+
+            if (Int32.TryParse(result, out ParsedPort))
+            {
+                MainConfig.LoginServersWSS["port"] = ParsedPort;
+            }
+        }
+
+        private static void UpdateEmailFrom(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.Email["defaultFrom"] = TF.Text.ToString();
+        }
+
+        private static void UpdateEmailHost(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.EmailTransport["host"] = TF.Text.ToString();
+        }
+
+        private static void UpdateEmailPort(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+
+            string PortString = TF.Text.ToString();
+            string result = Regex.Replace(PortString, @"[^\d]", "");
+
+            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+
+            int ParsedPort = 8810; //default port
+
+            if (Int32.TryParse(result, out ParsedPort))
+            {
+                MainConfig.EmailTransport["port"] = ParsedPort;
+            }
+        }
+
+        private static void UpdateEmailAuthPass(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.EmailAuth["pass"] = TF.Text.ToString();
+        }
+
+        private static void UpdateEmailAuthUser(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.EmailAuth["user"] = TF.Text.ToString();
+        }
+
+        private static void UpdatePrivateKeyPath(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.LoginServersSSH["privateKeyPem"] = TF.Text.ToString();
+        }
+
+        private static void UpdatePrivateKeyPass(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.LoginServersSSH["privateKeyPass"] = TF.Text.ToString();
+        }
+
+        private static void UpdatePreloginTheme(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.Theme["preLogin"] = TF.Text.ToString();
+        }
+
+        private static void UpdateDefaultTheme(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.Theme["default"] = TF.Text.ToString();
+        }
+
+        private static void UpdatePromptFile(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.General["promptFile"] = TF.Text.ToString();
+        }
+
+        private static void UpdateMenuFile(object sender, EventArgs e)
+        {
+            TextField TF = (TextField)sender;
+            MainConfig.General["menuFile"] = TF.Text.ToString();
         }
 
         private static void ButtonEKeyShow_Clicked(Button buttonEKeyShow, TextField textFieldEmailAuthPass)
@@ -312,7 +452,18 @@ namespace ENiGMAConfig
         private static void UpdateTelnetPort(object sender, EventArgs e)
         {
             TextField TF = (TextField)sender;
-            MainConfig.LoginServersTelnet["port"] = TF.Text.ToString();
+
+            string PortString = TF.Text.ToString();
+            string result = Regex.Replace(PortString, @"[^\d]", "");
+
+            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+
+            int ParsedPort = 8888; //default port
+
+            if (Int32.TryParse(result, out ParsedPort))
+            {
+                MainConfig.LoginServersTelnet["port"] = ParsedPort;
+            }
         }
 
         private static void UpdateBBSName(object sender, EventArgs e)
