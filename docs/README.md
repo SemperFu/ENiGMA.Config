@@ -7,9 +7,9 @@ Terminal Editor for [ENiGMA½ BBS](https://github.com/NuSkooler/enigma-bbs/) con
 # Linux
 
 ## .Net Core Install
-* https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore21
+* More information - https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore21
 * curl https://dot.net/v1/dotnet-install.sh
 * ./dotnet-install.sh -c Current
 
-## Run on Linyx
+## Run on Linux
 * ~/.dotnet/dotnet ENiGMA.Config.dll
