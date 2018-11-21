@@ -50,7 +50,7 @@ namespace ENiGMAConfig
                  new MenuItem ("_About", "", About),
             })
         });
-
+            
             top.Add(menu);
 
             win.Add(LabelNew, Footer);
@@ -119,7 +119,6 @@ namespace ENiGMAConfig
             CheckBox CheckBoxWS = new CheckBox(1, 6, "ws");
             CheckBoxWS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWS.Toggled += new EventHandler(UpdateWSEnabled);
-            
 
             Label LabelWSPort = new Label(17, 6, "port: ");
             TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.LoginServersWS.Qstr("port"));
@@ -128,7 +127,6 @@ namespace ENiGMAConfig
             CheckBox CheckBoxWSS = new CheckBox(1, 7, "wss");
             CheckBoxWSS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
             CheckBoxWSS.Toggled += new EventHandler(UpdateWSSEnabled);
-            
 
             Label LabelWSSPort = new Label(17, 7, "port: ");
             TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.LoginServersWSS.Qstr("port"));
@@ -489,7 +487,6 @@ namespace ENiGMAConfig
                 //File not new, save.
                 SaveJson(OpenedConfigFile.FullName);
             }
-          
         }
 
         private static void SaveAs()
