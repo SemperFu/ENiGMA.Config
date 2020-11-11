@@ -18,7 +18,7 @@ namespace ENiGMAConfig
         public JsonObject LoginServersWSS;
         public JsonObject Email;
         public JsonObject EmailTransport;
-        public JsonObject EmailAuth;
+        public JsonObject? EmailAuth;
 
         public JsonObject contentServers;
         public JsonObject messageConferences;

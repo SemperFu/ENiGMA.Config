@@ -323,7 +323,9 @@ namespace ENiGMAConfig
                 MainConfig.LoginServersWSS = MainConfig.LoginServersWebSocket.Qo("wss");
                 MainConfig.Email = MainConfig.MainObjects.Qo("email");
                 MainConfig.EmailTransport = MainConfig.Email.Qo("transport");
-                MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth");
+                try { MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth"); }
+                catch { }
+                
                 MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
                 MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
                 MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");

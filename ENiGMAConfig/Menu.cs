@@ -301,10 +301,10 @@ namespace ENiGMAConfig
 
             Label LabelEmailAuth = new Label(1, 4, "[Auth] ");
             Label LabelEmailAuthUser = new Label(8, 5, "User: ");
-            TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.Paths.Qs("logs"));
+            TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.EmailAuth.Qs("user")); 
             TextFieldEmailAuthUser.TextChanged += UpdateEmailAuthUser;
             Label LabelEmailAuthPass = new Label(8, 6, "Pass: ");
-            TextField TextFieldEmailAuthPass = new TextField(15, 6, 25, MainConfig.Paths.Qs("logs"));
+            TextField TextFieldEmailAuthPass = new TextField(15, 6, 25, MainConfig.EmailAuth.Qs("pass"));
             TextFieldEmailAuthPass.Secret = true;
             TextFieldEmailAuthPass.TextChanged += UpdateEmailAuthPass;
             Button ButtonEKeyShow = new Button(41, 6, "Show");
