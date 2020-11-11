@@ -331,7 +331,7 @@ namespace ENiGMAConfig
                 MainConfig.scannerTossers = MainConfig.MainObjects.Qo("scannerTossers");
                 MainConfig.archivers = MainConfig.MainObjects.Qo("archives");
 
-                // AddConfigMenu();
+                AddConfigMenu();
             }
             catch
             {
