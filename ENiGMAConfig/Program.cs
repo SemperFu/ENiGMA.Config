@@ -300,7 +300,7 @@ namespace ENiGMAConfig
         {
             HjsonOptions ImportOptions = new HjsonOptions();
             ImportOptions.KeepWsc = true;
-
+           
             MainConfig.Mainfile = HjsonValue.Load(FilePath, ImportOptions);
             ProcessConfig(); //File Loaded - Process it.
         }
@@ -323,9 +323,7 @@ namespace ENiGMAConfig
                 MainConfig.LoginServersWSS = MainConfig.LoginServersWebSocket.Qo("wss");
                 MainConfig.Email = MainConfig.MainObjects.Qo("email");
                 MainConfig.EmailTransport = MainConfig.Email.Qo("transport");
-                try { MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth"); }
-                catch { }
-                
+                if (MainConfig.EmailTransport is not null) MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth");
                 MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
                 MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
                 MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");
