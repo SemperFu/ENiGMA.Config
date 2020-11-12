@@ -1,0 +1,200 @@
+﻿{
+  "general": {
+    "boardName": "New ENiGMA BBS",
+    "menuFile": "new_enigma_bbs-menu.hjson",
+    "promptFile": "new_enigma_bbs-prompt.hjson"
+  },
+  "paths": {
+    "logs": "D:\\BBS\\enigma\\logs\\"
+  },
+  "logging": {
+    "rotatingFile": {
+      "level": "info",
+      "type": "rotating-file",
+      "fileName": "enigma-bbs.log",
+      "period": "1d",
+      "count": 3
+    }
+  },
+  "theme": {
+    "default": "luciano_blocktronics",
+    "preLogin": "luciano_blocktronics",
+    "passwordChar": "*",
+    "dateFormat": {
+      "short": "MM/DD/YYYY",
+      "long": "ddd, MMMM Do, YYYY"
+    },
+    "timeFormat": {
+      "short": "h:mm a"
+    },
+    "dateTimeFormat": {
+      "short": "MM/DD/YYYY h:mm a",
+      "long": "ddd, MMMM Do, YYYY, h:mm a"
+    }
+  },
+  "loginServers": {
+    "telnet": {
+      "port": 8888,
+      "enabled": true,
+      "firstMenu": "telnetConnected"
+    },
+    "ssh": {
+      "port": 8889,
+      "enabled": false,
+      "privateKeyPass": "SuperSecretPasswordChangeMe!",
+      "algorithms": {
+        "kex": [
+          "ecdh-sha2-nistp256",
+          "ecdh-sha2-nistp384",
+          "ecdh-sha2-nistp521",
+          "diffie-hellman-group-exchange-sha256",
+          "diffie-hellman-group14-sha1",
+          "diffie-hellman-group-exchange-sha1",
+          "diffie-hellman-group1-sha1"
+        ],
+        "cipher": [
+          "aes128-ctr",
+          "aes192-ctr",
+          "aes256-ctr",
+          "aes128-gcm",
+          "aes128-gcm@openssh.com",
+          "aes256-gcm",
+          "aes256-gcm@openssh.com",
+          "aes256-cbc",
+          "aes192-cbc",
+          "aes128-cbc",
+          "blowfish-cbc",
+          "3des-cbc",
+          "arcfour256",
+          "arcfour128",
+          "cast128-cbc",
+          "arcfour"
+        ],
+        "hmac": [
+          "hmac-sha2-256",
+          "hmac-sha2-512",
+          "hmac-sha1",
+          "hmac-md5",
+          "hmac-sha2-256-96",
+          "hmac-sha2-512-96",
+          "hmac-ripemd160",
+          "hmac-sha1-96",
+          "hmac-md5-96"
+        ],
+        "compress": [
+          "none"
+        ]
+      },
+      "privateKeyPem": "D:\\BBS\\enigma\\config\\ssh_private_key.pem",
+      "firstMenu": "sshConnected",
+      "firstMenuNewUser": "sshConnectedNewUser"
+    },
+    "webSocket": {
+      "proxied": false,
+      "ws": {
+        "port": 8810,
+        "enabled": false
+      },
+      "wss": {
+        "port": 8811,
+        "enabled": false,
+        "certPem": "D:\\BBS\\enigma\\config\\https_cert.pem",
+        "keyPem": "D:\\BBS\\enigma\\config\\https_cert_key.pem"
+      }
+    }
+  },
+  "contentServers": {
+    "web": {
+      "domain": "another-fine-enigma-bbs.org",
+      "staticRoot": "D:\\BBS\\enigma\\www",
+      "resetPassword": {
+        "resetPassEmailText": "D:\\BBS\\enigma\\misc\\reset_password_email.template.txt",
+        "resetPassEmailHtml": "D:\\BBS\\enigma\\misc\\reset_password_email.template.html",
+        "resetPageTemplate": "D:\\BBS\\enigma\\www\\reset_password.template.html"
+      },
+      "http": {
+        "port": 8080,
+        "enabled": false
+      },
+      "https": {
+        "port": 8443,
+        "enabled": false,
+        "certPem": "D:\\BBS\\enigma\\config\\https_cert.pem",
+        "keyPem": "D:\\BBS\\enigma\\config\\https_cert_key.pem"
+      }
+    },
+    "gopher": {
+      "port": 8070,
+      "enabled": false,
+      "publicHostname": "another-fine-enigma-bbs.org",
+      "publicPort": 8080,
+      "bannerFile": "gopher_banner.asc"
+    }
+  },
+  "email": {
+    "defaultFrom": "sysop@bbs.awesome.com",
+    "transport": {
+      "service": "Zoho",
+      "host": "smtp.awesomeserver.com",
+      "port": 587,
+      "secure": false,
+      "auth": {
+        "user": "myuser@myhost.com",
+        "pass": "supersecretpassword"
+      }
+    }
+  },
+  "messageConferences": {
+    "another_sample_conf": {
+      "name": "Another Sample Conference",
+      "desc": "Another conf sample. Change me!",
+      "areas": {
+        "another_sample_area": {
+          "name": "Another Sample Area",
+          "desc": "Another area example. Change me!",
+          "sort": 2
+        }
+      }
+    },
+    "local": {
+      "name": "Local",
+      "desc": "Local Areas",
+      "sort": 1,
+      "default": true,
+      "areas": {
+        "general": {
+          "name": "General",
+          "desc": "General chit-chat",
+          "sort": 1,
+          "default": true
+        }
+      }
+    }
+  },
+  "scannerTossers": {
+    "ftn_bso": {}
+  },
+  "fileBase": {
+    "areaStoragePrefix": "D:\\BBS\\enigma\\file_base\\",
+    "storageTags": {},
+    "areas": {}
+  },
+  "users": {
+    "requireActivation": false,
+    "preAuthIdleLogoutSeconds": 180,
+    "idleLogoutSeconds": 360,
+    "newUserNames": [
+      "new",
+      "apply"
+    ]
+  },
+  "archives": {
+    "archivers": {}
+  },
+  "fileTransferProtocols": {},
+  "statLog": {
+    "systemEvents": {
+      "loginHistoryMax": -1
+    }
+  }
+}

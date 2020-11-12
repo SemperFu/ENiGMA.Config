@@ -1,7 +1,10 @@
 ﻿using Hjson;
+using Newtonsoft.Json;
 using NStack;
 using System;
 using System.IO;
+
+//using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using Terminal.Gui;
 
@@ -300,8 +303,14 @@ namespace ENiGMAConfig
         {
             HjsonOptions ImportOptions = new HjsonOptions();
             ImportOptions.KeepWsc = true;
-           
+
             MainConfig.Mainfile = HjsonValue.Load(FilePath, ImportOptions);
+            JsonValue LoadedJSON = HjsonValue.Load(FilePath);
+
+            string JSONString = LoadedJSON.ToString(Stringify.Plain);
+
+            EnigmaConfigSchema Deserialized = JsonConvert.DeserializeObject<EnigmaConfigSchema>(JSONString);
+
             ProcessConfig(); //File Loaded - Process it.
         }
 
