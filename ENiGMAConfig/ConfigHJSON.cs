@@ -2,9 +2,10 @@
 
 namespace ENiGMAConfig
 {
-    internal class ConfigHJSON
+    public class ConfigHJSON
     {
         public JsonValue Mainfile; //For Main Config
+        public EnigmaConfigSchema Deserialized;
         public JsonObject MainObjects; //Convert to Objects
         public JsonObject General;  // For General Config settings
         public JsonObject Paths;
@@ -25,5 +26,10 @@ namespace ENiGMAConfig
         public JsonObject fileBase;
         public JsonObject scannerTossers;
         public JsonObject archivers;
+
+        public ConfigHJSON()
+        {
+            Deserialized = new();
+        }
     }
 }

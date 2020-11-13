@@ -7,7 +7,7 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        private static ConfigHJSON MainConfig = new ConfigHJSON();
+        
         private static FileInfo OpenedConfigFile;
         private static Toplevel top = Application.Top;
         private static string currentversion = "ENiGMA½ v0.0.9-alpha";
@@ -185,7 +185,7 @@ namespace ENiGMAConfig
 
             Label LabelTelnetPort = new Label(17, 0, "port: ");
             TextField TextFieldTelnetPort = new TextField(24, 0, 5, MainConfig.LoginServersTelnet.Qstr("port"));
-            TextFieldTelnetPort.TextChanged += UpdateTelnetPort;
+            TextFieldTelnetPort.TextChanged += (e) => UpdateTelnetPort(TextFieldTelnetPort, e);
 
             CheckBox CheckBoxSSH = new CheckBox(1, 1, "ssh");
             CheckBoxSSH.Checked = MainConfig.LoginServersSSH.Qb("enabled");
@@ -193,7 +193,7 @@ namespace ENiGMAConfig
 
             Label LabelSSHPort = new Label(17, 1, "port: ");
             TextField TextFieldSSHPort = new TextField(24, 1, 5, MainConfig.LoginServersSSH.Qstr("port"));
-            TextFieldSSHPort.TextChanged += UpdateSSHPort;
+            TextFieldSSHPort.TextChanged += (e) => UpdateSSHPort(TextFieldSSHPort, e);
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
             TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.LoginServersSSH.Qstr("privateKeyPem"));
@@ -215,7 +215,7 @@ namespace ENiGMAConfig
 
             Label LabelWSPort = new Label(17, 6, "port: ");
             TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.LoginServersWS.Qstr("port"));
-            TextFieldWSPort.TextChanged += UpdateWSPort;
+            TextFieldWSPort.TextChanged += (e) => UpdateWSPort(TextFieldWSPort, e);
 
             CheckBox CheckBoxWSS = new CheckBox(1, 7, "wss");
             CheckBoxWSS.Checked = MainConfig.LoginServersWSS.Qb("enabled");
@@ -223,7 +223,7 @@ namespace ENiGMAConfig
 
             Label LabelWSSPort = new Label(17, 7, "port: ");
             TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.LoginServersWSS.Qstr("port"));
-            TextFieldWSSPort.TextChanged += UpdateWSSPort;
+            TextFieldWSSPort.TextChanged += (e) => UpdateWSSPort(TextFieldWSSPort, e);
 
             FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
 
@@ -294,7 +294,7 @@ namespace ENiGMAConfig
             TextFieldEmailHost.TextChanged += UpdateEmailHost;
             Label LabelEmailPort = new Label(8, 3, "Port: ");
             TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.EmailTransport.Qstr("port"));
-            TextFieldEmailPort.TextChanged += UpdateEmailPort;
+            TextFieldEmailPort.TextChanged += (e) => UpdateEmailPort(TextFieldEmailPort, e);
             CheckBox CheckBoxEmailSecure = new CheckBox(22, 3, "secure");
             CheckBoxEmailSecure.Checked = MainConfig.EmailTransport.Qb("secure");
             CheckBoxEmailSecure.Toggled += UpdateWSSEnabled;

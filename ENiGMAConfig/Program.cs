@@ -12,6 +12,7 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
+        private static ConfigHJSON MainConfig = new ConfigHJSON();
         // private static object hson;
 
         private static void Main(string[] args)
@@ -29,33 +30,47 @@ namespace ENiGMAConfig
             MainConfig.Logging["fileName"] = e.ToString();
         }
 
-        private static void UpdateWSPort(ustring e)
+        private static void UpdateWSPort(TextField WSPort, ustring e)
         {
-            string PortString = e.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", "");
+            // Don't allow more than 4 digits and Match Digits only
+            if (WSPort.Text.Length > 4 || Regex.IsMatch(WSPort.Text.ToString(), "[^0-9]+"))
+            {
+                var cp = WSPort.CursorPosition;
+                WSPort.Text = e;
+                WSPort.CursorPosition = Math.Min(cp, WSPort.Text.RuneCount);
+            }
 
-            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            int DefaultPort = 8810; //default port
 
-            int ParsedPort = 8810; //default port
-
-            if (Int32.TryParse(result, out ParsedPort))
+            if (Int32.TryParse(WSPort.Text.ToString(), out int ParsedPort))
             {
                 MainConfig.LoginServersWS["port"] = ParsedPort;
             }
+            else
+            {
+                MainConfig.LoginServersWS["port"] = DefaultPort;
+            }
         }
 
-        private static void UpdateWSSPort(ustring e)
+        private static void UpdateWSSPort(TextField WSSPort, ustring e)
         {
-            string PortString = e.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", "");
+            // Don't allow more than 4 digits and Match Digits only
+            if (WSSPort.Text.Length > 4 || Regex.IsMatch(WSSPort.Text.ToString(), "[^0-9]+"))
+            {
+                var cp = WSSPort.CursorPosition;
+                WSSPort.Text = e;
+                WSSPort.CursorPosition = Math.Min(cp, WSSPort.Text.RuneCount);
+            }
 
-            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            int DefaultPort = 8811; //default port
 
-            int ParsedPort = 8811; //default port
-
-            if (Int32.TryParse(result, out ParsedPort))
+            if (Int32.TryParse(WSSPort.Text.ToString(), out int ParsedPort))
             {
                 MainConfig.LoginServersWSS["port"] = ParsedPort;
+            }
+            else
+            {
+                MainConfig.LoginServersWSS["port"] = DefaultPort;
             }
         }
 
@@ -69,18 +84,25 @@ namespace ENiGMAConfig
             MainConfig.EmailTransport["host"] = e.ToString();
         }
 
-        private static void UpdateEmailPort(ustring e)
+        private static void UpdateEmailPort(TextField EmailPort, ustring e)
         {
-            string PortString = e.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", "");
+            // Don't allow more than 4 digits and Match Digits only
+            if (EmailPort.Text.Length > 4 || Regex.IsMatch(EmailPort.Text.ToString(), "[^0-9]+"))
+            {
+                var cp = EmailPort.CursorPosition;
+                EmailPort.Text = e;
+                EmailPort.CursorPosition = Math.Min(cp, EmailPort.Text.RuneCount);
+            }
 
-            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            int DefaultPort = 8810; //default port
 
-            int ParsedPort = 8810; //default port
-
-            if (Int32.TryParse(result, out ParsedPort))
+            if (Int32.TryParse(EmailPort.Text.ToString(), out int ParsedPort))
             {
                 MainConfig.EmailTransport["port"] = ParsedPort;
+            }
+            else
+            {
+                MainConfig.EmailTransport["port"] = DefaultPort;
             }
         }
 
@@ -241,33 +263,47 @@ namespace ENiGMAConfig
             MainConfig.LoginServersWSS["enabled"] = WSSChecked;
         }
 
-        private static void UpdateSSHPort(ustring e)
+        private static void UpdateSSHPort(TextField SSHPort, ustring e)
         {
-            string PortString = e.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", "");
+            // Don't allow more than 4 digits and Match Digits only
+            if (SSHPort.Text.Length > 4 || Regex.IsMatch(SSHPort.Text.ToString(), "[^0-9]+"))
+            {
+                var cp = SSHPort.CursorPosition;
+                SSHPort.Text = e;
+                SSHPort.CursorPosition = Math.Min(cp, SSHPort.Text.RuneCount);
+            }
 
-            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            int DefaultPort = 8889; //default port
 
-            int ParsedPort = 8889; //default port
-
-            if (Int32.TryParse(result, out ParsedPort))
+            if (Int32.TryParse(SSHPort.Text.ToString(), out int ParsedPort))
             {
                 MainConfig.LoginServersSSH["port"] = ParsedPort;
             }
+            else
+            {
+                MainConfig.LoginServersSSH["port"] = DefaultPort;
+            }
         }
 
-        private static void UpdateTelnetPort(ustring e)
+        private static void UpdateTelnetPort(TextField TelnetPort, ustring e)
         {
-            string PortString = e.ToString();
-            string result = Regex.Replace(PortString, @"[^\d]", "");
+            // Don't allow more than 4 digits and Match Digits only
+            if (TelnetPort.Text.Length > 4 || Regex.IsMatch(TelnetPort.Text.ToString(), "[^0-9]+"))
+            {
+                var cp = TelnetPort.CursorPosition;
+                TelnetPort.Text = e;
+                TelnetPort.CursorPosition = Math.Min(cp, TelnetPort.Text.RuneCount);
+            }
 
-            //  if (PortString != result) TF.Text = result; //Comment out for now, causes bug
+            int DefaultPort = 8888; //default port
 
-            int ParsedPort = 8888; //default port
-
-            if (Int32.TryParse(result, out ParsedPort))
+            if (Int32.TryParse(TelnetPort.Text.ToString(), out int ParsedPort))
             {
                 MainConfig.LoginServersTelnet["port"] = ParsedPort;
+            }
+            else
+            {
+                MainConfig.LoginServersTelnet["port"] = DefaultPort;
             }
         }
 
@@ -309,7 +345,7 @@ namespace ENiGMAConfig
 
             string JSONString = LoadedJSON.ToString(Stringify.Plain);
 
-            EnigmaConfigSchema Deserialized = JsonConvert.DeserializeObject<EnigmaConfigSchema>(JSONString);
+            MainConfig.Deserialized = JsonConvert.DeserializeObject<EnigmaConfigSchema>(JSONString);
 
             ProcessConfig(); //File Loaded - Process it.
         }
