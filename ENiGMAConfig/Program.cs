@@ -5,7 +5,6 @@ using System;
 using System.IO;
 
 //using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 using Terminal.Gui;
 
 namespace ENiGMAConfig
@@ -33,7 +32,7 @@ namespace ENiGMAConfig
         private static void UpdateWSPort(TextField WSPort, ustring e)
         {
             // Don't allow more than 4 digits and Match Digits only
-            if (WSPort.Text.Length > 4 || Regex.IsMatch(WSPort.Text.ToString(), "[^0-9]+"))
+            if (SharedFunctions.PortCheck(WSPort.Text))
             {
                 var cp = WSPort.CursorPosition;
                 WSPort.Text = e;
@@ -44,6 +43,7 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(WSPort.Text.ToString(), out int ParsedPort))
             {
+                if (ParsedPort > 65535) WSPort.Text = "65535";
                 MainConfig.LoginServersWS["port"] = ParsedPort;
             }
             else
@@ -55,7 +55,7 @@ namespace ENiGMAConfig
         private static void UpdateWSSPort(TextField WSSPort, ustring e)
         {
             // Don't allow more than 4 digits and Match Digits only
-            if (WSSPort.Text.Length > 4 || Regex.IsMatch(WSSPort.Text.ToString(), "[^0-9]+"))
+            if (SharedFunctions.PortCheck(WSSPort.Text))
             {
                 var cp = WSSPort.CursorPosition;
                 WSSPort.Text = e;
@@ -66,6 +66,7 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(WSSPort.Text.ToString(), out int ParsedPort))
             {
+                if (ParsedPort > 65535) WSSPort.Text = "65535";
                 MainConfig.LoginServersWSS["port"] = ParsedPort;
             }
             else
@@ -87,7 +88,7 @@ namespace ENiGMAConfig
         private static void UpdateEmailPort(TextField EmailPort, ustring e)
         {
             // Don't allow more than 4 digits and Match Digits only
-            if (EmailPort.Text.Length > 4 || Regex.IsMatch(EmailPort.Text.ToString(), "[^0-9]+"))
+            if (SharedFunctions.PortCheck(EmailPort.Text))
             {
                 var cp = EmailPort.CursorPosition;
                 EmailPort.Text = e;
@@ -98,6 +99,7 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(EmailPort.Text.ToString(), out int ParsedPort))
             {
+                if (ParsedPort > 65535) EmailPort.Text = "65535";
                 MainConfig.EmailTransport["port"] = ParsedPort;
             }
             else
@@ -265,8 +267,7 @@ namespace ENiGMAConfig
 
         private static void UpdateSSHPort(TextField SSHPort, ustring e)
         {
-            // Don't allow more than 4 digits and Match Digits only
-            if (SSHPort.Text.Length > 4 || Regex.IsMatch(SSHPort.Text.ToString(), "[^0-9]+"))
+            if (SharedFunctions.PortCheck(SSHPort.Text))
             {
                 var cp = SSHPort.CursorPosition;
                 SSHPort.Text = e;
@@ -277,6 +278,7 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(SSHPort.Text.ToString(), out int ParsedPort))
             {
+                if (ParsedPort > 65535) SSHPort.Text = "65535";
                 MainConfig.LoginServersSSH["port"] = ParsedPort;
             }
             else
@@ -288,7 +290,7 @@ namespace ENiGMAConfig
         private static void UpdateTelnetPort(TextField TelnetPort, ustring e)
         {
             // Don't allow more than 4 digits and Match Digits only
-            if (TelnetPort.Text.Length > 4 || Regex.IsMatch(TelnetPort.Text.ToString(), "[^0-9]+"))
+            if (SharedFunctions.PortCheck(TelnetPort.Text))
             {
                 var cp = TelnetPort.CursorPosition;
                 TelnetPort.Text = e;
@@ -299,6 +301,7 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(TelnetPort.Text.ToString(), out int ParsedPort))
             {
+                if (ParsedPort > 65535) TelnetPort.Text = "65535";
                 MainConfig.LoginServersTelnet["port"] = ParsedPort;
             }
             else

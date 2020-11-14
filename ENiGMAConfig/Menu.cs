@@ -184,7 +184,7 @@ namespace ENiGMAConfig
             CheckBoxTelnet.Toggled += UpdateTelnetEnabled;
 
             Label LabelTelnetPort = new Label(17, 0, "port: ");
-            TextField TextFieldTelnetPort = new TextField(24, 0, 5, MainConfig.LoginServersTelnet.Qstr("port"));
+            TextField TextFieldTelnetPort = new TextField(24, 0, 6, MainConfig.LoginServersTelnet.Qstr("port"));
             TextFieldTelnetPort.TextChanged += (e) => UpdateTelnetPort(TextFieldTelnetPort, e);
 
             CheckBox CheckBoxSSH = new CheckBox(1, 1, "ssh");
@@ -192,7 +192,7 @@ namespace ENiGMAConfig
             CheckBoxSSH.Toggled += UpdateSSHEnabled;
 
             Label LabelSSHPort = new Label(17, 1, "port: ");
-            TextField TextFieldSSHPort = new TextField(24, 1, 5, MainConfig.LoginServersSSH.Qstr("port"));
+            TextField TextFieldSSHPort = new TextField(24, 1, 6, MainConfig.LoginServersSSH.Qstr("port"));
             TextFieldSSHPort.TextChanged += (e) => UpdateSSHPort(TextFieldSSHPort, e);
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
@@ -214,7 +214,7 @@ namespace ENiGMAConfig
             CheckBoxWS.Toggled += UpdateWSEnabled;
 
             Label LabelWSPort = new Label(17, 6, "port: ");
-            TextField TextFieldWSPort = new TextField(24, 6, 5, MainConfig.LoginServersWS.Qstr("port"));
+            TextField TextFieldWSPort = new TextField(24, 6, 6, MainConfig.LoginServersWS.Qstr("port"));
             TextFieldWSPort.TextChanged += (e) => UpdateWSPort(TextFieldWSPort, e);
 
             CheckBox CheckBoxWSS = new CheckBox(1, 7, "wss");
@@ -222,7 +222,7 @@ namespace ENiGMAConfig
             CheckBoxWSS.Toggled += UpdateWSSEnabled;
 
             Label LabelWSSPort = new Label(17, 7, "port: ");
-            TextField TextFieldWSSPort = new TextField(24, 7, 5, MainConfig.LoginServersWSS.Qstr("port"));
+            TextField TextFieldWSSPort = new TextField(24, 7, 6, MainConfig.LoginServersWSS.Qstr("port"));
             TextFieldWSSPort.TextChanged += (e) => UpdateWSSPort(TextFieldWSSPort, e);
 
             FrameViewLoginServers.Add(CheckBoxTelnet, LabelTelnetPort, TextFieldTelnetPort, CheckBoxSSH, LabelSSHPort, TextFieldSSHPort, LabelPrivateKeyPath, TextFieldPrivateKeyPath, LabelPrivateKeyPass, ButtonPKeyShow, TextFieldPrivateKeyPass, CheckBoxWS, LabelWSPort, TextFieldWSPort, CheckBoxWSS, LabelWSSPort, TextFieldWSSPort);
