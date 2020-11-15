@@ -6,34 +6,29 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        private static void UpdateBBSName(ustring e)
+        private static void UpdateBBSName(TextField BBSName, ustring OldString)
         {
-            //Name validation if needed
-            string f = e.ToString();
-
-            MainConfig.General["boardName"] = f;
-            //  TF.Text = "UpdateCheck";
+            MainConfig.General["boardName"] = BBSName.Text.ToString();
         }
 
-        private static void UpdateMenuFile(ustring e)
+        private static void UpdateMenuFile(TextField MenuFile, ustring OldString)
         {
-            string f = e.ToString();
-            MainConfig.General["menuFile"] = f;
+            MainConfig.General["menuFile"] = MenuFile.Text.ToString();
         }
 
-        private static void UpdatePromptFile(ustring e)
+        private static void UpdatePromptFile(TextField PromptFile, ustring OldString)
         {
-            MainConfig.General["promptFile"] = e.ToString();
+            MainConfig.General["promptFile"] = PromptFile.Text.ToString();
         }
 
-        private static void UpdateDefaultTheme(ustring e)
+        private static void UpdateDefaultTheme(TextField DefaultTheme, ustring OldString)
         {
-            MainConfig.Theme["default"] = e.ToString();
+            MainConfig.Theme["default"] = DefaultTheme.Text.ToString();
         }
 
-        private static void UpdatePreloginTheme(ustring e)
+        private static void UpdatePreloginTheme(TextField LoginTheme, ustring OldString)
         {
-            MainConfig.Theme["preLogin"] = e.ToString();
+            MainConfig.Theme["preLogin"] = LoginTheme.Text.ToString();
         }
 
         private static void UpdateTelnetEnabled(bool TelnetChecked)
@@ -56,14 +51,14 @@ namespace ENiGMAConfig
             MainConfig.LoginServersWSS["enabled"] = WSSChecked;
         }
 
-        private static void UpdatePrivateKeyPath(ustring e)
+        private static void UpdatePrivateKeyPath(TextField PrivateKeyPath, ustring OldString)
         {
-            MainConfig.LoginServersSSH["privateKeyPem"] = e.ToString();
+            MainConfig.LoginServersSSH["privateKeyPem"] = PrivateKeyPath.Text.ToString();
         }
 
-        private static void UpdatePrivateKeyPass(ustring e)
+        private static void UpdatePrivateKeyPass(TextField PrivateKeyPass, ustring OldString)
         {
-            MainConfig.LoginServersSSH["privateKeyPass"] = e.ToString();
+            MainConfig.LoginServersSSH["privateKeyPass"] = PrivateKeyPass.Text.ToString();
         }
 
         private static void UpdateSSHPort(TextField SSHPort, ustring OldText)
@@ -185,14 +180,14 @@ namespace ENiGMAConfig
             }
         }
 
-        private static void UpdateLogFileame(ustring e)
+        private static void UpdateLogFileame(TextField LogFileame, ustring OldText)
         {
-            MainConfig.Logging["fileName"] = e.ToString();
+            MainConfig.Logging["fileName"] = LogFileame.Text.ToString();
         }
 
-        private static void UpdateLogPath(ustring e)
+        private static void UpdateLogPath(TextField LogPath, ustring OldText)
         {
-            MainConfig.Paths["logs"] = e.ToString();
+            MainConfig.Paths["logs"] = LogPath.Text.ToString();
         }
 
         private static void UpdateLogLevel(RadioGroup.SelectedItemChangedArgs SelectedItemChangedArgs)
@@ -227,23 +222,23 @@ namespace ENiGMAConfig
             }
         }
 
-        private static void UpdateEmailFrom(ustring e)
+        private static void UpdateEmailFrom(TextField EmailFrom, ustring OldText)
         {
-            MainConfig.Email["defaultFrom"] = e.ToString();
+            MainConfig.Email["defaultFrom"] = EmailFrom.Text.ToString();
         }
 
-        private static void UpdateEmailHost(ustring e)
+        private static void UpdateEmailHost(TextField EmailHost, ustring OldText)
         {
-            MainConfig.EmailTransport["host"] = e.ToString();
+            MainConfig.EmailTransport["host"] = EmailHost.Text.ToString();
         }
 
-        private static void UpdateEmailPort(TextField EmailPort, ustring e)
+        private static void UpdateEmailPort(TextField EmailPort, ustring OldText)
         {
             // Don't allow more than 4 digits and Match Digits only
             if (SharedFunctions.PortCheck(EmailPort.Text))
             {
                 var cp = EmailPort.CursorPosition;
-                EmailPort.Text = e;
+                EmailPort.Text = OldText;
                 EmailPort.CursorPosition = Math.Min(cp, EmailPort.Text.RuneCount);
             }
 
@@ -260,14 +255,14 @@ namespace ENiGMAConfig
             }
         }
 
-        private static void UpdateEmailAuthPass(ustring e)
+        private static void UpdateEmailAuthPass(TextField EmailAuthPass, ustring OldText)
         {
-            MainConfig.EmailAuth["pass"] = e.ToString();
+            MainConfig.EmailAuth["pass"] = EmailAuthPass.Text.ToString();
         }
 
-        private static void UpdateEmailAuthUser(ustring e)
+        private static void UpdateEmailAuthUser(TextField EmailAuthUser, ustring OldText)
         {
-            MainConfig.EmailAuth["user"] = e.ToString();
+            MainConfig.EmailAuth["user"] = EmailAuthUser.Text.ToString();
         }
     }
 }

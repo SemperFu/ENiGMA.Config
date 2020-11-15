@@ -7,11 +7,10 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        
         private static FileInfo OpenedConfigFile;
         private static Toplevel top = Application.Top;
         private static string currentversion = "ENiGMA½ v0.0.9-alpha";
-        private static string MainWindowsName = currentversion+ " Config Editor";
+        private static string MainWindowsName = currentversion + " Config Editor";
 
         private static Window win = new Window(new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1), MainWindowsName);
         //private static Window win = new Window(MainWindowsName)
@@ -35,7 +34,7 @@ namespace ENiGMAConfig
             top.Add(win);
             top = Application.Top;
 
-           // Creates a menubar, the item "New" has a help menu.
+            // Creates a menubar, the item "New" has a help menu.
             var menu = new MenuBar(new MenuBarItem[] {
                 new MenuBarItem ("_File", new MenuItem [] {
                     new MenuItem ("_New", "Creates new file", NewFile),
@@ -157,23 +156,23 @@ namespace ENiGMAConfig
             Label LabelBoardName = new Label(3, 2, "BBS Name:");
             TextField TextfieldBoardName = new TextField(19, 2, 30, MainConfig.General.Qs("boardName").Replace("½", "")); //Crashes textfield. Bug already submitted
                                                                                                                           //  TextfieldBoardName.Changed += new EventHandler(UpdateBBSName);
-            TextfieldBoardName.TextChanged += UpdateBBSName;
+            TextfieldBoardName.TextChanged += (e) => UpdateBBSName(TextfieldBoardName, e);
 
             Label LabelMenuFile = new Label(3, 4, "Menu File:");
             TextField TextFieldMenuFile = new TextField(19, 4, 30, MainConfig.General.Qs("menuFile"));
-            TextFieldMenuFile.TextChanged += UpdateMenuFile;
+            TextFieldMenuFile.TextChanged += (e) => UpdateMenuFile(TextFieldMenuFile, e);
 
             Label LabelPromptFile = new Label(3, 5, "Prompt File:");
             TextField TextFieldPromptFile = new TextField(19, 5, 30, MainConfig.General.Qs("promptFile"));
-            TextFieldPromptFile.TextChanged += UpdatePromptFile;
+            TextFieldPromptFile.TextChanged += (e) => UpdatePromptFile(TextFieldPromptFile, e);
 
             Label LabelDefaultTheme = new Label(3, 7, "Default Theme:");
             TextField TextFieldDefaultTheme = new TextField(19, 7, 30, MainConfig.Theme.Qs("default"));
-            TextFieldDefaultTheme.TextChanged += UpdateDefaultTheme;
+            TextFieldDefaultTheme.TextChanged += (e) => UpdateDefaultTheme(TextFieldDefaultTheme, e);
 
             Label LabelPreLoginTheme = new Label(3, 8, "Prelogin Theme: ");
             TextField TextFieldPreLoginTheme = new TextField(19, 8, 30, MainConfig.Theme.Qs("preLogin"));
-            TextFieldPreLoginTheme.TextChanged += UpdatePreloginTheme;
+            TextFieldPreLoginTheme.TextChanged += (e) => UpdatePreloginTheme(TextFieldPreLoginTheme, e);
 
             win.Add(LabelBoardName, TextfieldBoardName, LabelMenuFile, TextFieldMenuFile, LabelPromptFile, TextFieldPromptFile, LabelDefaultTheme, TextFieldDefaultTheme, LabelPreLoginTheme, TextFieldPreLoginTheme);
 
@@ -197,13 +196,13 @@ namespace ENiGMAConfig
 
             Label LabelPrivateKeyPath = new Label(1, 3, "privateKeyPem: ");
             TextField TextFieldPrivateKeyPath = new TextField(17, 3, 42, MainConfig.LoginServersSSH.Qstr("privateKeyPem"));
-            TextFieldPrivateKeyPath.TextChanged += UpdatePrivateKeyPath;
+            TextFieldPrivateKeyPath.TextChanged += (e) => UpdatePrivateKeyPath(TextFieldPrivateKeyPath, e);
 
             Label LabelPrivateKeyPass = new Label(1, 4, "privateKeyPass: ");
 
             TextField TextFieldPrivateKeyPass = new TextField(17, 4, 32, MainConfig.LoginServersSSH.Qstr("privateKeyPass"));
             TextFieldPrivateKeyPass.Secret = true;
-            TextFieldPrivateKeyPass.TextChanged += UpdatePrivateKeyPass;
+            TextFieldPrivateKeyPass.TextChanged += (e) => UpdatePrivateKeyPass(TextFieldPrivateKeyPass, e);
 
             Button ButtonPKeyShow = new Button(51, 4, "Show");
 
@@ -232,10 +231,10 @@ namespace ENiGMAConfig
             //new CheckBox (1, 0, "Remember me"),
             Label LabelFilename = new Label(2, 1, "Filename: ");
             TextField TextFieldFileName = new TextField(13, 1, 22, MainConfig.Logging.Qs("fileName"));
-            TextFieldFileName.TextChanged += UpdateLogFileame;
+            TextFieldFileName.TextChanged += (e) => UpdateLogFileame(TextFieldFileName, e);
             Label LabelLogPath = new Label(2, 2, "Path: ");
             TextField TextFieldLogPath = new TextField(13, 2, 22, MainConfig.Paths.Qs("logs"));
-            TextFieldLogPath.TextChanged += UpdateLogPath;
+            TextFieldLogPath.TextChanged += (e) => UpdateLogPath(TextFieldLogPath, e);
             Label LabelLogLevel = new Label(39, 0, "Level: ");
             RadioGroup RadioGroupDebug = new RadioGroup(39, 2, new ustring[] { "_Error", "_Warn", "_Info", "_Debug", "_Trace" });
 
@@ -287,11 +286,11 @@ namespace ENiGMAConfig
             Label LabelEmailTransport = new Label(1, 0, "[Transport] ");
             Label LabelEmailFrom = new Label(8, 1, "From: ");
             TextField TextFieldEmailFrom = new TextField(15, 1, 25, MainConfig.Email.Qs("defaultFrom"));
-            TextFieldEmailFrom.TextChanged += UpdateEmailFrom;
+            TextFieldEmailFrom.TextChanged += (e) => UpdateEmailFrom(TextFieldEmailFrom, e);
 
             Label LabelEmailHost = new Label(8, 2, "Host: ");
             TextField TextFieldEmailHost = new TextField(15, 2, 25, MainConfig.EmailTransport.Qs("host"));
-            TextFieldEmailHost.TextChanged += UpdateEmailHost;
+            TextFieldEmailHost.TextChanged += (e) => UpdateEmailHost(TextFieldEmailHost, e);
             Label LabelEmailPort = new Label(8, 3, "Port: ");
             TextField TextFieldEmailPort = new TextField(15, 3, 6, MainConfig.EmailTransport.Qstr("port"));
             TextFieldEmailPort.TextChanged += (e) => UpdateEmailPort(TextFieldEmailPort, e);
@@ -301,12 +300,12 @@ namespace ENiGMAConfig
 
             Label LabelEmailAuth = new Label(1, 4, "[Auth] ");
             Label LabelEmailAuthUser = new Label(8, 5, "User: ");
-            TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.EmailAuth.Qs("user")); 
-            TextFieldEmailAuthUser.TextChanged += UpdateEmailAuthUser;
+            TextField TextFieldEmailAuthUser = new TextField(15, 5, 25, MainConfig.EmailAuth.Qs("user"));
+            TextFieldEmailAuthUser.TextChanged += (e) => UpdateEmailAuthUser(TextFieldEmailAuthUser, e);
             Label LabelEmailAuthPass = new Label(8, 6, "Pass: ");
             TextField TextFieldEmailAuthPass = new TextField(15, 6, 25, MainConfig.EmailAuth.Qs("pass"));
             TextFieldEmailAuthPass.Secret = true;
-            TextFieldEmailAuthPass.TextChanged += UpdateEmailAuthPass;
+            TextFieldEmailAuthPass.TextChanged += (e) => UpdateEmailAuthPass(TextFieldEmailAuthPass, e);
             Button ButtonEKeyShow = new Button(41, 6, "Show");
             ButtonEKeyShow.Clicked += () => ButtonEKeyShow_Clicked(ButtonEKeyShow, TextFieldEmailAuthPass);
 
