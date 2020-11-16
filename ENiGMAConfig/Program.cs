@@ -10,7 +10,7 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        private static ConfigHJSON MainConfig = new ConfigHJSON();
+        private static ConfigHJSON MainConfig = new();
         // private static object hson;
 
         private static void Main(string[] args)
@@ -28,8 +28,7 @@ namespace ENiGMAConfig
 
         private static void LoadJson(string FilePath)
         {
-            HjsonOptions ImportOptions = new HjsonOptions();
-            ImportOptions.KeepWsc = true;
+            HjsonOptions ImportOptions = new(){KeepWsc = true};
 
             MainConfig.Mainfile = HjsonValue.Load(FilePath, ImportOptions);
             JsonValue LoadedJSON = HjsonValue.Load(FilePath);
@@ -43,13 +42,11 @@ namespace ENiGMAConfig
 
         private static void SaveJson(string FilePath)
         {
-            HjsonOptions FileOptions = new HjsonOptions();
-            FileOptions.KeepWsc = true;
-
-            FileInfo SavePath = new FileInfo(FilePath);
+          
+            FileInfo SavePath = new(FilePath);
             if (SavePath.Exists) //Exists - Lets Backup
             {
-                DirectoryInfo BackupDir = new DirectoryInfo(Path.Combine(SavePath.Directory.FullName, "Backups"));
+                DirectoryInfo BackupDir = new(Path.Combine(SavePath.Directory.FullName, "Backups"));
                 if (!BackupDir.Exists) BackupDir.Create();
                 DateTime CurrentTime = DateTime.Now;
                 string BackupFilename = SavePath.Name + "." + CurrentTime.Year.ToString() + "." + CurrentTime.Month.ToString() + "." + CurrentTime.Day.ToString() + "." + CurrentTime.Minute.ToString() + "." + CurrentTime.Second.ToString() + ".bak";
@@ -58,6 +55,7 @@ namespace ENiGMAConfig
                 SavePath.CopyTo(BackupPath);
             }
 
+            HjsonOptions FileOptions = new() { KeepWsc = true };
             HjsonValue.Save(MainConfig.Mainfile, FilePath, FileOptions);
         }
 

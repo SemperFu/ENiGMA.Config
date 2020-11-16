@@ -97,7 +97,12 @@ namespace ENiGMAConfig
 
             if (Int32.TryParse(TelnetPort.Text.ToString(), out int ParsedPort))
             {
-                if (ParsedPort > 65535) TelnetPort.Text = "65535";
+                if (ParsedPort > 65535)
+                {
+                    TelnetPort.Text = "65535";
+                    ParsedPort = 65535;
+                }
+
                 MainConfig.LoginServersTelnet["port"] = ParsedPort;
             }
             else
@@ -193,33 +198,16 @@ namespace ENiGMAConfig
         private static void UpdateLogLevel(RadioGroup.SelectedItemChangedArgs SelectedItemChangedArgs)
         {
             // "_Error", "_Warn", "_Info", "_Debug", "_Trace"
-            switch (SelectedItemChangedArgs.SelectedItem)
+            MainConfig.Logging["level"] = SelectedItemChangedArgs.SelectedItem switch
             {
-                case 0:
-                    MainConfig.Logging["level"] = "error";
-                    break;
-
-                case 1:
-                    MainConfig.Logging["level"] = "warn";
-                    break;
-
-                case 2:
-                    MainConfig.Logging["level"] = "info";
-                    break;
-
-                case 3:
-                    MainConfig.Logging["level"] = "debug";
-                    break;
-
-                case 4:
-                    MainConfig.Logging["level"] = "trace";
-                    break;
-
-                default: //If missing or invalid - Set to info.
-
-                    MainConfig.Logging["level"] = "info";
-                    break;
-            }
+                0 => "error",
+                1 => "warn",
+                2 => "info",
+                3 => "debug",
+                4 => "trace",
+                //If missing or invalid - Set to info.
+                _ => "info",
+            };
         }
 
         private static void UpdateEmailFrom(TextField EmailFrom, ustring OldText)
