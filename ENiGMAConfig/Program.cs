@@ -11,7 +11,7 @@ namespace ENiGMAConfig
     partial class Program
     {
         private static ConfigHJSON MainConfig = new();
-        // private static object hson;
+        // private static object hjson;
 
         private static void Main(string[] args)
         {
@@ -28,7 +28,7 @@ namespace ENiGMAConfig
 
         private static void LoadJson(string FilePath)
         {
-            HjsonOptions ImportOptions = new(){KeepWsc = true};
+            HjsonOptions ImportOptions = new() { KeepWsc = true };
 
             MainConfig.Mainfile = HjsonValue.Load(FilePath, ImportOptions);
             JsonValue LoadedJSON = HjsonValue.Load(FilePath);
@@ -42,7 +42,6 @@ namespace ENiGMAConfig
 
         private static void SaveJson(string FilePath)
         {
-          
             FileInfo SavePath = new(FilePath);
             if (SavePath.Exists) //Exists - Lets Backup
             {
@@ -76,8 +75,33 @@ namespace ENiGMAConfig
                 MainConfig.LoginServersWS = MainConfig.LoginServersWebSocket.Qo("ws");
                 MainConfig.LoginServersWSS = MainConfig.LoginServersWebSocket.Qo("wss");
                 MainConfig.Email = MainConfig.MainObjects.Qo("email");
+
+                if (MainConfig.Email.Count == 0)
+                {
+                    JsonObject AuthOptions = new()
+                    {
+                        { "user", "" },
+                        { "pass", "" },
+                    };
+
+                    JsonObject TransportOptions = new()
+                    {
+                        { "host", "smtp.example.com" },
+                        { "port", 587 },
+                        { "secure", true },
+                        { "auth", AuthOptions },
+                    };
+
+                    JsonObject Email = new()
+                    {
+                        { "defaultFrom", "sfromop@email.net" },
+                        { "transport", TransportOptions }
+                    };
+                    MainConfig.Email.Add("defaultFrom", "sfromop@email.net");
+                    MainConfig.Email.Add("transport", TransportOptions);
+                }
                 MainConfig.EmailTransport = MainConfig.Email.Qo("transport");
-                if (MainConfig.EmailTransport is not null) MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth");
+                if (MainConfig.EmailTransport is not null) { MainConfig.EmailAuth = MainConfig.EmailTransport.Qo("auth"); }
                 MainConfig.contentServers = MainConfig.MainObjects.Qo("contentServers");
                 MainConfig.messageConferences = MainConfig.MainObjects.Qo("messageConferences");
                 MainConfig.messageNetworks = MainConfig.MainObjects.Qo("messageNetworks");

@@ -7,7 +7,6 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        
         private static Toplevel top = Application.Top;
         private static string currentversion = "ENiGMA½ v0.0.9-alpha";
         private static string MainWindowsName = currentversion + " Config Editor";
@@ -80,7 +79,7 @@ namespace ENiGMAConfig
             {
                 SaveD.FilePath = "config.hjson"; //Default filename prompt
             }
-           
+
             Application.Run(SaveD);
             // SaveD.
             if (SaveD.FileName == null) return; //No file selected - return
@@ -273,27 +272,44 @@ namespace ENiGMAConfig
             //new CheckBox (1, 0, "Remember me"),
             Label LabelEmailTransport = new(1, 0, "[Transport] ");
             Label LabelEmailFrom = new(8, 1, "From: ");
-            TextField TextFieldEmailFrom = new(15, 1, 25, MainConfig.Email.Qs("defaultFrom"));
+            string EmailFrom = string.Empty;
+            if (MainConfig.Email.Qs("defaultFrom") is not null) EmailFrom = MainConfig.Email.Qs("defaultFrom");
+
+            TextField TextFieldEmailFrom = new(15, 1, 25, EmailFrom);
             TextFieldEmailFrom.TextChanged += (e) => UpdateEmailFrom(TextFieldEmailFrom, e);
 
             Label LabelEmailHost = new(8, 2, "Host: ");
-            TextField TextFieldEmailHost = new(15, 2, 25, MainConfig.EmailTransport.Qs("host"));
+            string EmailHost = string.Empty;
+            if (MainConfig.EmailTransport is not null) EmailHost = MainConfig.EmailTransport.Qs("host");
+            TextField TextFieldEmailHost = new(15, 2, 25, EmailHost);
             TextFieldEmailHost.TextChanged += (e) => UpdateEmailHost(TextFieldEmailHost, e);
+
             Label LabelEmailPort = new(8, 3, "Port: ");
-            TextField TextFieldEmailPort = new(15, 3, 6, MainConfig.EmailTransport.Qstr("port"));
+            string EmailPort = string.Empty;
+            if (MainConfig.EmailTransport is not null) EmailPort = MainConfig.EmailTransport.Qstr("port");
+            TextField TextFieldEmailPort = new(15, 3, 6, EmailPort);
             TextFieldEmailPort.TextChanged += (e) => UpdateEmailPort(TextFieldEmailPort, e);
+
             CheckBox CheckBoxEmailSecure = new(22, 3, "secure");
-            CheckBoxEmailSecure.Checked = MainConfig.EmailTransport.Qb("secure");
+            if (MainConfig.EmailTransport is not null) CheckBoxEmailSecure.Checked = MainConfig.EmailTransport.Qb("secure");
             CheckBoxEmailSecure.Toggled += UpdateWSSEnabled;
 
             Label LabelEmailAuth = new(1, 4, "[Auth] ");
+
             Label LabelEmailAuthUser = new(8, 5, "User: ");
-            TextField TextFieldEmailAuthUser = new(15, 5, 25, MainConfig.EmailAuth.Qs("user"));
+            string EmailAuthUser = string.Empty;
+            if (MainConfig.EmailAuth is not null) EmailAuthUser = MainConfig.EmailAuth.Qs("user");
+            TextField TextFieldEmailAuthUser = new(15, 5, 25, EmailAuthUser);
             TextFieldEmailAuthUser.TextChanged += (e) => UpdateEmailAuthUser(TextFieldEmailAuthUser, e);
+
             Label LabelEmailAuthPass = new(8, 6, "Pass: ");
-            TextField TextFieldEmailAuthPass = new(15, 6, 25, MainConfig.EmailAuth.Qs("pass"));
+            string EmailAuthPath = string.Empty;
+            if (MainConfig.EmailAuth is not null) EmailAuthPath = MainConfig.EmailAuth.Qs("pass");
+            TextField TextFieldEmailAuthPass = new(15, 6, 25, EmailAuthPath);
+
             TextFieldEmailAuthPass.Secret = true;
             TextFieldEmailAuthPass.TextChanged += (e) => UpdateEmailAuthPass(TextFieldEmailAuthPass, e);
+
             Button ButtonEKeyShow = new(41, 6, "Show");
             ButtonEKeyShow.Clicked += () => ButtonEKeyShow_Clicked(ButtonEKeyShow, TextFieldEmailAuthPass);
 

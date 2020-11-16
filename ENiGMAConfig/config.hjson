@@ -293,7 +293,7 @@
 	defaultFrom: sysop@cdbbs.net
 	
 	transport: {
-		host: smtp.zoho.com
+		    host: smtp.zoho.com
 			port: 587
 			secure: true
 			auth: {
