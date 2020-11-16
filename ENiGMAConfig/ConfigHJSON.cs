@@ -1,4 +1,5 @@
 ﻿using Hjson;
+using System.IO;
 
 namespace ENiGMAConfig
 {
@@ -6,6 +7,7 @@ namespace ENiGMAConfig
     {
         public JsonValue Mainfile; //For Main Config
         public EnigmaConfigSchema Deserialized;
+        public FileInfo OpenedConfigFile;
         public JsonObject MainObjects; //Convert to Objects
         public JsonObject General;  // For General Config settings
         public JsonObject Paths;
@@ -29,6 +31,7 @@ namespace ENiGMAConfig
 
         public ConfigHJSON()
         {
+            OpenedConfigFile = null;
             Deserialized = new();
         }
     }

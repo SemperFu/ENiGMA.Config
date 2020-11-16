@@ -7,7 +7,7 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        private static FileInfo OpenedConfigFile;
+        
         private static Toplevel top = Application.Top;
         private static string currentversion = "ENiGMA½ v0.0.9-alpha";
         private static string MainWindowsName = currentversion + " Config Editor";
@@ -70,7 +70,17 @@ namespace ENiGMAConfig
         {
             SaveDialog SaveD = new("Save As", "Save as file");
             SaveD.DirectoryPath = Directory.GetCurrentDirectory(); //Use current path for now. Switch to default config
-
+            SaveD.AllowedFileTypes = new string[] { "hjson" };
+            SaveD.NameFieldLabel = "File: ";
+            if (MainConfig.OpenedConfigFile is not null)
+            {
+                SaveD.FilePath = MainConfig.OpenedConfigFile.Name; //Default filename prompt
+            }
+            else
+            {
+                SaveD.FilePath = "config.hjson"; //Default filename prompt
+            }
+           
             Application.Run(SaveD);
             // SaveD.
             if (SaveD.FileName == null) return; //No file selected - return
@@ -81,7 +91,7 @@ namespace ENiGMAConfig
             }
 
             string FullSavePath = Path.Combine(SaveD.DirectoryPath.ToString(), Filename);
-            OpenedConfigFile = new FileInfo(FullSavePath);
+            MainConfig.OpenedConfigFile = new FileInfo(FullSavePath);
             SaveJson(FullSavePath);
         }
 
@@ -90,16 +100,19 @@ namespace ENiGMAConfig
             OpenDialog OpenD = new("Open", "Open a file");
             OpenD.DirectoryPath = OpenD.DirectoryPath = Directory.GetCurrentDirectory();
             OpenD.AllowsMultipleSelection = false;
+            OpenD.AllowedFileTypes = new string[] { "hjson", "json" };
+            OpenD.NameFieldLabel = "File: ";
+            //OpenD.FilePath = MainConfig.FileName; //Default filename prompt
             //System.Runtime.InteropServices.RuntimeInformation
             Application.Run(OpenD);
 
             if (OpenD.FilePaths.Count == 0) return; //No file selected - return
-            OpenedConfigFile = new FileInfo(OpenD.FilePaths[0]);
-            if (OpenedConfigFile.Exists)
+            MainConfig.OpenedConfigFile = new FileInfo(OpenD.FilePaths[0]);
+            if (MainConfig.OpenedConfigFile.Exists)
             {
                 MessageBox.Query(60, 7, "Selected File", string.Join(", ", OpenD.FilePaths), "Ok");
                 ClearViews();
-                LoadJson(OpenedConfigFile.FullName);
+                LoadJson(MainConfig.OpenedConfigFile.FullName);
             }
             else
             {
@@ -128,14 +141,14 @@ namespace ENiGMAConfig
             TextReader TextReaderNew = new StringReader(Properties.Resources.DefaultConfigFile);
 
             MainConfig.Mainfile = HjsonValue.Load(TextReaderNew, ImportOptions);
-            OpenedConfigFile = null;
+            MainConfig.OpenedConfigFile = null;
             ClearViews();
             ProcessConfig();
         }
 
         private static void Save()
         {
-            if (OpenedConfigFile == null)
+            if (MainConfig.OpenedConfigFile == null)
             {
                 //File was new  - Use saveas instead
                 SaveAs();
@@ -143,7 +156,7 @@ namespace ENiGMAConfig
             else
             {
                 //File not new, save.
-                SaveJson(OpenedConfigFile.FullName);
+                SaveJson(MainConfig.OpenedConfigFile.FullName);
             }
         }
 

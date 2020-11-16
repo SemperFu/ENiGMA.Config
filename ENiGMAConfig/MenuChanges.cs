@@ -6,27 +6,27 @@ namespace ENiGMAConfig
 {
     partial class Program
     {
-        private static void UpdateBBSName(TextField BBSName, ustring OldString)
+        private static void UpdateBBSName(TextField BBSName, ustring OldText)
         {
             MainConfig.General["boardName"] = BBSName.Text.ToString();
         }
 
-        private static void UpdateMenuFile(TextField MenuFile, ustring OldString)
+        private static void UpdateMenuFile(TextField MenuFile, ustring OldText)
         {
             MainConfig.General["menuFile"] = MenuFile.Text.ToString();
         }
 
-        private static void UpdatePromptFile(TextField PromptFile, ustring OldString)
+        private static void UpdatePromptFile(TextField PromptFile, ustring OldText)
         {
             MainConfig.General["promptFile"] = PromptFile.Text.ToString();
         }
 
-        private static void UpdateDefaultTheme(TextField DefaultTheme, ustring OldString)
+        private static void UpdateDefaultTheme(TextField DefaultTheme, ustring OldText)
         {
             MainConfig.Theme["default"] = DefaultTheme.Text.ToString();
         }
 
-        private static void UpdatePreloginTheme(TextField LoginTheme, ustring OldString)
+        private static void UpdatePreloginTheme(TextField LoginTheme, ustring OldText)
         {
             MainConfig.Theme["preLogin"] = LoginTheme.Text.ToString();
         }
@@ -51,12 +51,12 @@ namespace ENiGMAConfig
             MainConfig.LoginServersWSS["enabled"] = WSSChecked;
         }
 
-        private static void UpdatePrivateKeyPath(TextField PrivateKeyPath, ustring OldString)
+        private static void UpdatePrivateKeyPath(TextField PrivateKeyPath, ustring OldText)
         {
             MainConfig.LoginServersSSH["privateKeyPem"] = PrivateKeyPath.Text.ToString();
         }
 
-        private static void UpdatePrivateKeyPass(TextField PrivateKeyPass, ustring OldString)
+        private static void UpdatePrivateKeyPass(TextField PrivateKeyPass, ustring OldText)
         {
             MainConfig.LoginServersSSH["privateKeyPass"] = PrivateKeyPass.Text.ToString();
         }
